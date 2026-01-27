@@ -7,9 +7,17 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 25%, #4ECDC4 50%, #45B7D1 75%, #96CEB4 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     min-height: 100vh;
     overflow-x: hidden;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .screen {
@@ -22,7 +30,7 @@ body {
     display: block;
 }
 
-/* Scherm 1: Spelkeuze */
+/* ========== Scherm 1: Spelkeuze ========== */
 #game-selection {
     text-align: center;
     padding-top: 40px;
@@ -32,7 +40,14 @@ body {
     color: white;
     font-size: 2.5rem;
     margin-bottom: 40px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+    animation: bounceIn 0.8s ease;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 .game-options {
@@ -44,18 +59,36 @@ body {
 }
 
 .game-card {
-    background: white;
-    border-radius: 20px;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border-radius: 25px;
     padding: 30px;
     width: 280px;
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    border: 4px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+}
+
+.game-card::before {
+    content: '';
+    position: absolute;
+    top: -4px; left: -4px; right: -4px; bottom: -4px;
+    background: linear-gradient(45deg, #FF6B6B, #FFE66D, #4ECDC4, #45B7D1);
+    border-radius: 28px;
+    z-index: -1;
+    animation: borderGlow 3s ease infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
 }
 
 .game-card:hover, .game-card:active {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
 }
 
 .game-icon {
@@ -67,12 +100,14 @@ body {
 .snake-svg {
     width: 100%;
     height: 100%;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
 }
 
 .game-card h2 {
     color: #4CAF50;
     font-size: 1.8rem;
     margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 .game-card p {
@@ -80,55 +115,111 @@ body {
     font-size: 1.1rem;
 }
 
-/* Scherm 2: Instellingen */
+/* ========== Scherm 2: Instellingen ========== */
 #settings-screen {
     text-align: center;
-    padding-top: 30px;
+    padding-top: 20px;
 }
 
 #settings-screen h1 {
     color: white;
-    font-size: 2rem;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
 }
 
 .settings-container {
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
-    max-width: 400px;
+    background: linear-gradient(145deg, #ffffff, #f8f8f8);
+    border-radius: 25px;
+    padding: 25px;
+    max-width: 420px;
     margin: 0 auto;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
 .setting-group {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     text-align: left;
+}
+
+.setting-group.half {
+    flex: 1;
+}
+
+.setting-row {
+    display: flex;
+    gap: 15px;
 }
 
 .setting-group label {
     display: block;
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
     font-weight: 600;
 }
 
 .setting-group input[type="number"] {
     width: 100%;
-    padding: 15px;
-    font-size: 1.2rem;
-    border: 2px solid #ddd;
-    border-radius: 10px;
+    padding: 12px;
+    font-size: 1.1rem;
+    border: 3px solid #e0e0e0;
+    border-radius: 12px;
     text-align: center;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .setting-group input[type="number"]:focus {
     outline: none;
-    border-color: #4CAF50;
+    border-color: #4ECDC4;
+    box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
 }
 
+/* Moeilijkheidsgraad knoppen */
+.difficulty-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.difficulty-btn {
+    flex: 1;
+    padding: 12px 8px;
+    border: 3px solid #e0e0e0;
+    border-radius: 15px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.difficulty-btn .diff-icon {
+    font-size: 1rem;
+}
+
+.difficulty-btn .diff-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #666;
+}
+
+.difficulty-btn.selected {
+    border-color: #4ECDC4;
+    background: linear-gradient(145deg, #E8FFF9, #D0F5EE);
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+}
+
+.difficulty-btn.selected .diff-label {
+    color: #2A9D8F;
+}
+
+.difficulty-btn:active {
+    transform: scale(0.95);
+}
+
+/* Operator knoppen */
 .operator-buttons {
     display: flex;
     gap: 10px;
@@ -137,65 +228,76 @@ body {
 
 .operator-btn {
     flex: 1;
-    min-width: 60px;
-    padding: 15px;
-    font-size: 1.5rem;
-    border: 3px solid #ddd;
-    border-radius: 10px;
+    min-width: 55px;
+    padding: 14px;
+    font-size: 1.4rem;
+    border: 3px solid #e0e0e0;
+    border-radius: 12px;
     background: white;
     cursor: pointer;
     transition: all 0.2s;
+    font-weight: bold;
 }
 
 .operator-btn.selected {
-    background: #4CAF50;
-    border-color: #4CAF50;
+    background: linear-gradient(145deg, #FF6B6B, #FF8E8E);
+    border-color: #FF6B6B;
     color: white;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
 }
 
 .operator-btn:active {
     transform: scale(0.95);
 }
 
+/* Settings advanced section */
+.settings-advanced {
+    background: #f5f5f5;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+/* Knoppen onderaan */
 .button-row {
     display: flex;
     gap: 15px;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .back-btn, .start-btn {
     flex: 1;
-    padding: 18px 30px;
-    font-size: 1.3rem;
+    padding: 16px 25px;
+    font-size: 1.2rem;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .back-btn {
-    background: #95a5a6;
+    background: linear-gradient(145deg, #a0a0a0, #888888);
     color: white;
 }
 
 .start-btn {
-    background: linear-gradient(135deg, #4CAF50, #45a049);
+    background: linear-gradient(145deg, #4CAF50, #45a049);
     color: white;
-    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
 }
 
-.back-btn:active, .start-btn:active {
+.start-btn:active, .back-btn:active {
     transform: scale(0.95);
 }
 
 .back-btn.small {
-    padding: 10px 20px;
+    padding: 10px 18px;
     font-size: 1rem;
     flex: none;
 }
 
-/* Scherm 3: Het spel */
+/* ========== Scherm 3: Het spel ========== */
 #game-screen {
     padding: 10px;
     display: flex;
@@ -212,13 +314,13 @@ body {
 }
 
 .timer {
-    background: white;
+    background: linear-gradient(145deg, #FFE66D, #FFD93D);
     padding: 12px 25px;
     border-radius: 25px;
     font-size: 1.4rem;
     font-weight: bold;
     color: #333;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(255, 217, 61, 0.5);
 }
 
 .snake-wrapper {
@@ -233,13 +335,13 @@ body {
 .snake-grid {
     display: grid;
     gap: 0;
-    background: white;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    background: linear-gradient(145deg, #ffffff, #f5f5f5);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
 }
 
-/* Elk vakje in de grid (cel + eventueel pijl) */
+/* Elk vakje in de grid */
 .grid-cell {
     width: 60px;
     height: 60px;
@@ -258,43 +360,52 @@ body {
     justify-content: center;
     font-size: 1.3rem;
     font-weight: bold;
-    border-radius: 8px;
-    border: 2px solid #333;
+    border-radius: 12px;
+    border: 3px solid #333;
     background: white;
+    transition: all 0.3s;
 }
 
 .number-box.filled {
-    background: white;
-    color: #333;
+    background: linear-gradient(145deg, #E8F5E9, #C8E6C9);
+    color: #2E7D32;
+    border-color: #4CAF50;
 }
 
 .number-box.empty {
-    background: #fff;
-    border: 2px dashed #4CAF50;
-    color: #4CAF50;
+    background: linear-gradient(145deg, #FFF3E0, #FFE0B2);
+    border: 3px dashed #FF9800;
+    color: #E65100;
     cursor: pointer;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(255, 152, 0, 0); }
 }
 
 .number-box.empty:active {
-    background: #e8f5e9;
+    background: linear-gradient(145deg, #FFE0B2, #FFCC80);
     transform: scale(0.95);
 }
 
 .number-box.correct {
-    background: #4CAF50 !important;
+    background: linear-gradient(145deg, #4CAF50, #66BB6A) !important;
     color: white !important;
-    border: 2px solid #4CAF50 !important;
+    border: 3px solid #388E3C !important;
     animation: correctPulse 0.5s ease;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.5);
 }
 
 .number-box.wrong {
-    background: #f44336 !important;
+    background: linear-gradient(145deg, #F44336, #EF5350) !important;
     color: white !important;
-    border: 2px solid #f44336 !important;
+    border: 3px solid #D32F2F !important;
     animation: wrongShake 0.5s ease;
 }
 
-/* Pijl cel (horizontaal of verticaal) */
+/* Pijl cel */
 .arrow-cell {
     display: flex;
     align-items: center;
@@ -322,69 +433,72 @@ body {
 
 .arrow-cell.horizontal .arrow {
     width: 40px;
-    height: 2px;
-    background: #333;
+    height: 3px;
+    background: linear-gradient(90deg, #666, #333);
+    border-radius: 2px;
 }
 
 .arrow-cell.horizontal .arrow::after {
     content: '';
     position: absolute;
-    right: -6px;
-    border: 6px solid transparent;
-    border-left: 8px solid #333;
+    right: -8px;
+    border: 7px solid transparent;
+    border-left: 10px solid #333;
 }
 
 .arrow-cell.horizontal.left .arrow::after {
     right: auto;
-    left: -6px;
+    left: -8px;
     border-left: none;
-    border-right: 8px solid #333;
+    border-right: 10px solid #333;
 }
 
 .arrow-cell.vertical .arrow {
-    width: 2px;
+    width: 3px;
     height: 30px;
-    background: #333;
+    background: linear-gradient(180deg, #666, #333);
+    border-radius: 2px;
 }
 
 .arrow-cell.vertical .arrow::after {
     content: '';
     position: absolute;
-    bottom: -6px;
-    border: 6px solid transparent;
-    border-top: 8px solid #333;
+    bottom: -8px;
+    border: 7px solid transparent;
+    border-top: 10px solid #333;
 }
 
 .arrow-cell.vertical.up .arrow::after {
     bottom: auto;
-    top: -6px;
+    top: -8px;
     border-top: none;
-    border-bottom: 8px solid #333;
+    border-bottom: 10px solid #333;
 }
 
 /* Bewerking label op de pijl */
 .operation-label {
     position: absolute;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: bold;
-    color: #ff9800;
-    background: white;
-    padding: 1px 4px;
-    border-radius: 3px;
+    color: white;
+    background: linear-gradient(145deg, #9C27B0, #7B1FA2);
+    padding: 3px 8px;
+    border-radius: 8px;
     white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(156, 39, 176, 0.4);
 }
 
 .arrow-cell.horizontal .operation-label {
-    top: 5px;
+    top: 3px;
 }
 
 .arrow-cell.vertical .operation-label {
     left: 50%;
     transform: translateX(-50%);
-    top: 2px;
+    top: 0px;
 }
 
-/* Lege cel (voor de bochten) */
+/* Lege cel */
 .empty-cell {
     width: 60px;
     height: 60px;
@@ -392,28 +506,28 @@ body {
 
 @keyframes correctPulse {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    50% { transform: scale(1.15); }
 }
 
 @keyframes wrongShake {
     0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-5px); }
-    40%, 80% { transform: translateX(5px); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
 }
 
-/* Popup */
+/* ========== Popup ========== */
 .popup {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     top: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     display: flex;
     justify-content: center;
     align-items: flex-end;
     z-index: 1000;
-    transition: opacity 0.3s;
+    backdrop-filter: blur(5px);
 }
 
 .popup.hidden {
@@ -421,30 +535,31 @@ body {
 }
 
 .popup-content {
-    background: white;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
     padding: 25px;
-    border-radius: 25px 25px 0 0;
+    border-radius: 30px 30px 0 0;
     width: 100%;
     max-width: 400px;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
 }
 
 .input-display {
-    background: #f5f5f5;
+    background: linear-gradient(145deg, #E3F2FD, #BBDEFB);
     padding: 20px;
     font-size: 2.5rem;
     text-align: center;
-    border-radius: 15px;
+    border-radius: 20px;
     margin-bottom: 20px;
-    min-height: 70px;
-    color: #333;
+    min-height: 75px;
+    color: #1565C0;
     font-weight: bold;
+    box-shadow: inset 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .number-pad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 15px;
 }
 
@@ -452,45 +567,50 @@ body {
     padding: 20px;
     font-size: 1.8rem;
     border: none;
-    border-radius: 15px;
-    background: #e0e0e0;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
     cursor: pointer;
     transition: all 0.15s;
-    font-weight: 600;
+    font-weight: 700;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .num-btn:active {
     transform: scale(0.95);
-    background: #bdbdbd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .num-btn.confirm-btn {
-    background: #4CAF50;
+    background: linear-gradient(145deg, #4CAF50, #66BB6A);
     color: white;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
 }
 
 .num-btn.clear-btn {
-    background: #ff9800;
+    background: linear-gradient(145deg, #FF9800, #FFB74D);
     color: white;
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
 }
 
 .close-popup-btn {
     width: 100%;
     padding: 15px;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     border: none;
     border-radius: 15px;
-    background: #95a5a6;
+    background: linear-gradient(145deg, #90A4AE, #78909C);
     color: white;
     cursor: pointer;
     font-weight: 600;
+    transition: transform 0.2s;
 }
 
 .close-popup-btn:active {
     transform: scale(0.98);
 }
 
-/* Vuurwerk canvas */
+/* ========== Vuurwerk canvas ========== */
 #fireworks-canvas {
     position: fixed;
     top: 0;
@@ -501,27 +621,32 @@ body {
     z-index: 2000;
 }
 
-/* Responsive aanpassingen voor iPad */
+/* ========== Responsive: iPad ========== */
 @media (min-width: 768px) {
     .grid-cell {
-        width: 70px;
-        height: 70px;
+        width: 75px;
+        height: 75px;
     }
 
     .number-box {
-        width: 58px;
-        height: 58px;
-        font-size: 1.5rem;
+        width: 62px;
+        height: 62px;
+        font-size: 1.6rem;
     }
 
     .arrow-cell.horizontal {
-        width: 60px;
-        height: 70px;
+        width: 65px;
+        height: 75px;
     }
 
     .arrow-cell.vertical {
-        width: 70px;
-        height: 50px;
+        width: 75px;
+        height: 55px;
+    }
+
+    .operation-label {
+        font-size: 1.05rem;
+        padding: 4px 10px;
     }
 
     .game-card {
@@ -539,39 +664,41 @@ body {
     }
 }
 
-/* Kleine schermen */
+/* ========== Responsive: Klein scherm ========== */
 @media (max-width: 400px) {
     .grid-cell {
-        width: 45px;
-        height: 45px;
+        width: 48px;
+        height: 48px;
     }
 
     .number-box {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.05rem;
+        border-radius: 8px;
     }
 
     .arrow-cell.horizontal {
-        width: 35px;
-        height: 45px;
+        width: 38px;
+        height: 48px;
     }
 
     .arrow-cell.vertical {
-        width: 45px;
-        height: 30px;
+        width: 48px;
+        height: 32px;
     }
 
     .arrow-cell.horizontal .arrow {
-        width: 28px;
+        width: 30px;
     }
 
     .arrow-cell.vertical .arrow {
-        height: 22px;
+        height: 24px;
     }
 
     .operation-label {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
+        padding: 2px 5px;
     }
 
     #game-selection h1 {
@@ -579,7 +706,15 @@ body {
     }
 
     .game-card {
-        width: 240px;
+        width: 250px;
         padding: 20px;
+    }
+
+    .difficulty-btn .diff-label {
+        font-size: 0.75rem;
+    }
+
+    .difficulty-btn .diff-icon {
+        font-size: 0.85rem;
     }
 }

@@ -12,6 +12,38 @@ let startTime = null;
 let emptyCellsRemaining = 0;
 let gridWidth = 5;
 let gridRows = 4;
+let maxValue = 50; // Maximum waarde (5x hoogste getal)
+
+// Moeilijkheidsgraad presets
+const difficultyPresets = {
+    makkelijk: {
+        startNumber: 5,
+        maxOperation: 5,
+        gridWidth: 4,
+        gridRows: 3,
+        operators: ['+', '-'],
+        hidePercentage: 0.35
+    },
+    normaal: {
+        startNumber: 10,
+        maxOperation: 10,
+        gridWidth: 5,
+        gridRows: 4,
+        operators: ['+', '-', '*'],
+        hidePercentage: 0.45
+    },
+    moeilijk: {
+        startNumber: 15,
+        maxOperation: 12,
+        gridWidth: 6,
+        gridRows: 5,
+        operators: ['+', '-', '*', '/'],
+        hidePercentage: 0.55
+    }
+};
+
+let currentDifficulty = 'normaal';
+let hidePercentage = 0.45;
 
 // Schermen wisselen
 function showScreen(screenId) {
@@ -36,6 +68,37 @@ function goToSelection() {
 function goToSettings() {
     stopTimer();
     showScreen('settings-screen');
+}
+
+// Moeilijkheidsgraad selectie
+function selectDifficulty(difficulty) {
+    currentDifficulty = difficulty;
+    const preset = difficultyPresets[difficulty];
+
+    // Update UI
+    document.querySelectorAll('.difficulty-btn').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    document.querySelector(`.difficulty-btn[data-difficulty="${difficulty}"]`).classList.add('selected');
+
+    // Vul de velden in met de preset waarden
+    document.getElementById('start-number').value = preset.startNumber;
+    document.getElementById('max-operation').value = preset.maxOperation;
+    document.getElementById('grid-width').value = preset.gridWidth;
+    document.getElementById('grid-rows').value = preset.gridRows;
+
+    // Update operator knoppen
+    document.querySelectorAll('.operator-btn').forEach(btn => {
+        const op = btn.dataset.op;
+        if (preset.operators.includes(op)) {
+            btn.classList.add('selected');
+        } else {
+            btn.classList.remove('selected');
+        }
+    });
+
+    selectedOperators = [...preset.operators];
+    hidePercentage = preset.hidePercentage;
 }
 
 // Operator knoppen
@@ -92,34 +155,69 @@ function getArrowDirection(from, to) {
 }
 
 // Genereer een bewerking die geldig is
-function generateOperation(currentValue, operators, maxOp) {
-    const op = operators[Math.floor(Math.random() * operators.length)];
+// minValue = 1, maxValue = 5 * maxOp (ingesteld bij start)
+function generateOperation(currentValue, operators, maxOp, minValue, maxAllowedValue) {
+    let op = operators[Math.floor(Math.random() * operators.length)];
     let operand, nextValue;
     let attempts = 0;
+    const maxAttempts = 50;
 
     do {
         attempts++;
 
+        // Als we te veel pogingen doen, probeer een andere operator
+        if (attempts > 10 && attempts % 10 === 0) {
+            op = operators[Math.floor(Math.random() * operators.length)];
+        }
+
         switch (op) {
             case '+':
-                operand = Math.floor(Math.random() * maxOp) + 1;
-                nextValue = currentValue + operand;
+                // Zorg dat we niet boven maxAllowedValue komen
+                const maxAdd = Math.min(maxOp, maxAllowedValue - currentValue);
+                if (maxAdd < 1) {
+                    operand = 1;
+                    nextValue = currentValue + 1;
+                } else {
+                    operand = Math.floor(Math.random() * maxAdd) + 1;
+                    nextValue = currentValue + operand;
+                }
                 break;
+
             case '-':
-                operand = Math.floor(Math.random() * Math.min(maxOp, currentValue)) + 1;
-                nextValue = currentValue - operand;
-                if (nextValue < 0) nextValue = currentValue; // Voorkom negatieve getallen
+                // Zorg dat we niet onder minValue (1) komen
+                const maxSub = Math.min(maxOp, currentValue - minValue);
+                if (maxSub < 1) {
+                    // Kan niet aftrekken, doe optelling
+                    operand = Math.floor(Math.random() * Math.min(maxOp, maxAllowedValue - currentValue)) + 1;
+                    nextValue = currentValue + operand;
+                    op = '+';
+                } else {
+                    operand = Math.floor(Math.random() * maxSub) + 1;
+                    nextValue = currentValue - operand;
+                }
                 break;
+
             case '*':
-                const multipliers = [2, 3, 4, 5, 6, 7, 8, 9, 10].filter(m => m <= maxOp);
-                operand = multipliers[Math.floor(Math.random() * multipliers.length)] || 2;
-                nextValue = currentValue * operand;
+                // Zoek vermenigvuldigers die niet boven maxAllowedValue uitkomen
+                const validMultipliers = [2, 3, 4, 5, 6, 7, 8, 9, 10].filter(m =>
+                    m <= maxOp && currentValue * m <= maxAllowedValue
+                );
+                if (validMultipliers.length > 0) {
+                    operand = validMultipliers[Math.floor(Math.random() * validMultipliers.length)];
+                    nextValue = currentValue * operand;
+                } else {
+                    // Geen geldige vermenigvuldiger, doe optelling
+                    operand = Math.floor(Math.random() * Math.min(maxOp, maxAllowedValue - currentValue)) + 1;
+                    nextValue = currentValue + operand;
+                    op = '+';
+                }
                 break;
+
             case '/':
-                // Zoek delers die een heel getal opleveren
+                // Zoek delers die een heel getal >= minValue opleveren
                 const divisors = [];
                 for (let d = 2; d <= Math.min(maxOp, currentValue); d++) {
-                    if (currentValue % d === 0) {
+                    if (currentValue % d === 0 && currentValue / d >= minValue) {
                         divisors.push(d);
                     }
                 }
@@ -127,14 +225,19 @@ function generateOperation(currentValue, operators, maxOp) {
                     operand = divisors[Math.floor(Math.random() * divisors.length)];
                     nextValue = currentValue / operand;
                 } else {
-                    // Geen geldige deler, gebruik + als fallback
-                    operand = 1;
-                    nextValue = currentValue + 1;
-                    return { op: '+', operand: 1, nextValue: currentValue + 1 };
+                    // Geen geldige deler, doe optelling
+                    operand = Math.floor(Math.random() * Math.min(maxOp, maxAllowedValue - currentValue)) + 1;
+                    nextValue = currentValue + operand;
+                    op = '+';
                 }
                 break;
         }
-    } while (nextValue < 0 && attempts < 20);
+    } while ((nextValue < minValue || nextValue > maxAllowedValue || !Number.isInteger(nextValue)) && attempts < maxAttempts);
+
+    // Fallback als niets werkt
+    if (nextValue < minValue || nextValue > maxAllowedValue || !Number.isInteger(nextValue)) {
+        return { op: '+', operand: 1, nextValue: Math.min(currentValue + 1, maxAllowedValue) };
+    }
 
     return { op, operand, nextValue };
 }
@@ -145,7 +248,10 @@ function generateSnake(startNumber, maxOp, width, rows, operators) {
     snakeData = [];
     arrowData = [];
 
-    let currentValue = startNumber;
+    const minValue = 1; // Nooit onder 1
+    const maxAllowedValue = maxOp * 5; // Maximum 5x het hoogste getal in bewerking
+
+    let currentValue = Math.max(startNumber, minValue); // Zorg dat startgetal minstens 1 is
 
     // Eerste vakje
     snakeData.push({
@@ -159,7 +265,7 @@ function generateSnake(startNumber, maxOp, width, rows, operators) {
 
     // Genereer rest van de slang
     for (let i = 1; i < path.length; i++) {
-        const { op, operand, nextValue } = generateOperation(currentValue, operators, maxOp);
+        const { op, operand, nextValue } = generateOperation(currentValue, operators, maxOp, minValue, maxAllowedValue);
 
         // Voeg pijl toe
         arrowData.push({
@@ -186,7 +292,6 @@ function generateSnake(startNumber, maxOp, width, rows, operators) {
     }
 
     // Maak sommige getallen verborgen (om in te vullen)
-    // Verberg ongeveer 40-50% van de getallen, maar niet de eerste
     const indicesToHide = [];
     for (let i = 1; i < snakeData.length; i++) {
         indicesToHide.push(i);
@@ -194,7 +299,7 @@ function generateSnake(startNumber, maxOp, width, rows, operators) {
 
     // Shuffle en selecteer
     indicesToHide.sort(() => Math.random() - 0.5);
-    const numToHide = Math.floor(snakeData.length * 0.45);
+    const numToHide = Math.floor(snakeData.length * hidePercentage);
 
     for (let i = 0; i < numToHide && i < indicesToHide.length; i++) {
         snakeData[indicesToHide[i]].hidden = true;
@@ -216,13 +321,7 @@ function renderSnake() {
     const grid = document.getElementById('snake-grid');
     grid.innerHTML = '';
 
-    // Bereken grid dimensies
-    // Elke cel in de path krijgt een number-box
-    // Tussen horizontale cellen komen horizontale pijlen
-    // Tussen verticale cellen (rij-overgangen) komen verticale pijlen
-
     // Grid kolommen: number + arrow + number + arrow + ... + number
-    // = width numbers + (width-1) horizontal arrows per row
     const gridCols = gridWidth * 2 - 1;
 
     // Grid rijen: voor elke dataRij een number-rij, en daartussen een pijl-rij
@@ -257,7 +356,7 @@ function renderSnake() {
         } else {
             // Verticale pijl
             const gridRow = Math.min(arrow.fromRow, arrow.toRow) * 2 + 1;
-            const gridCol = arrow.fromCol * 2; // Beide cols zijn hetzelfde bij verticale pijl
+            const gridCol = arrow.fromCol * 2;
             gridMap[gridRow][gridCol] = { type: 'arrow', data: arrow, direction: arrow.direction };
         }
     });
@@ -381,7 +480,7 @@ function closePopup() {
 }
 
 function inputNumber(num) {
-    if (inputValue.length < 5) { // Max 5 cijfers
+    if (inputValue.length < 5) {
         inputValue += num.toString();
         updateInputDisplay();
     }
@@ -444,7 +543,10 @@ function confirmInput() {
 
 // Initialisatie
 document.addEventListener('DOMContentLoaded', () => {
-    // Zorg dat audio werkt op mobiel (moet door gebruikersinteractie)
+    // Zorg dat audio werkt op mobiel
     document.body.addEventListener('touchstart', initAudio, { once: true });
     document.body.addEventListener('click', initAudio, { once: true });
+
+    // Zet standaard moeilijkheidsgraad
+    selectDifficulty('normaal');
 });
