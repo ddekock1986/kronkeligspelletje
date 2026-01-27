@@ -61,12 +61,20 @@ function selectGame(game) {
     } else if (game === 'rekenpiramide') {
         currentGame = 'pyramid';
         showScreen('settings-screen-pyramid');
+    } else if (game === 'sudoku') {
+        currentGame = 'sudoku';
+        showScreen('settings-screen-sudoku');
+    } else if (game === 'binary') {
+        currentGame = 'binary';
+        showScreen('settings-screen-binary');
     }
 }
 
 function goToSelection() {
     stopSnakeTimer();
     if (typeof stopPyramidTimer === 'function') stopPyramidTimer();
+    if (typeof stopSudokuTimer === 'function') stopSudokuTimer();
+    if (typeof stopBinaryTimer === 'function') stopBinaryTimer();
     showScreen('game-selection');
 }
 
@@ -77,6 +85,12 @@ function goToSettings(game) {
     } else if (game === 'pyramid') {
         if (typeof stopPyramidTimer === 'function') stopPyramidTimer();
         showScreen('settings-screen-pyramid');
+    } else if (game === 'sudoku') {
+        if (typeof stopSudokuTimer === 'function') stopSudokuTimer();
+        showScreen('settings-screen-sudoku');
+    } else if (game === 'binary') {
+        if (typeof stopBinaryTimer === 'function') stopBinaryTimer();
+        showScreen('settings-screen-binary');
     }
 }
 
@@ -87,6 +101,14 @@ function selectDifficulty(difficulty, game) {
     } else if (game === 'pyramid') {
         if (typeof selectPyramidDifficulty === 'function') {
             selectPyramidDifficulty(difficulty);
+        }
+    } else if (game === 'sudoku') {
+        if (typeof selectSudokuDifficulty === 'function') {
+            selectSudokuDifficulty(difficulty);
+        }
+    } else if (game === 'binary') {
+        if (typeof selectBinaryDifficulty === 'function') {
+            selectBinaryDifficulty(difficulty);
         }
     }
 }
