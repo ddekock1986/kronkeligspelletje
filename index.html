@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Spelletjes voor Romée</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Scherm 1: Spelkeuze -->
+    <div id="game-selection" class="screen active">
+        <h1>Kies een spelletje!</h1>
+        <div class="game-options">
+            <div class="game-card" onclick="selectGame('rekenslang')">
+                <div class="game-icon">
+                    <svg viewBox="0 0 200 160" class="snake-svg">
+                        <!-- Kronkelend pad -->
+                        <rect x="20" y="20" width="40" height="40" fill="#4CAF50" rx="5"/>
+                        <text x="40" y="47" text-anchor="middle" fill="white" font-size="16" font-weight="bold">3</text>
+
+                        <!-- Pijl met bewerking -->
+                        <line x1="60" y1="40" x2="85" y2="40" stroke="#333" stroke-width="2"/>
+                        <polygon points="85,35 95,40 85,45" fill="#333"/>
+                        <text x="77" y="32" text-anchor="middle" fill="#ff9800" font-size="12" font-weight="bold">+4</text>
+
+                        <rect x="95" y="20" width="40" height="40" fill="white" stroke="#4CAF50" stroke-width="3" stroke-dasharray="5,3" rx="5"/>
+                        <text x="115" y="47" text-anchor="middle" fill="#4CAF50" font-size="16" font-weight="bold">?</text>
+
+                        <!-- Pijl naar beneden -->
+                        <line x1="115" y1="60" x2="115" y2="85" stroke="#333" stroke-width="2"/>
+                        <polygon points="110,85 115,95 120,85" fill="#333"/>
+                        <text x="130" y="78" text-anchor="middle" fill="#ff9800" font-size="12" font-weight="bold">×2</text>
+
+                        <rect x="95" y="95" width="40" height="40" fill="#4CAF50" rx="5"/>
+                        <text x="115" y="122" text-anchor="middle" fill="white" font-size="16" font-weight="bold">14</text>
+
+                        <!-- Pijl naar links -->
+                        <line x1="95" y1="115" x2="70" y2="115" stroke="#333" stroke-width="2"/>
+                        <polygon points="70,110 60,115 70,120" fill="#333"/>
+                        <text x="77" y="107" text-anchor="middle" fill="#ff9800" font-size="12" font-weight="bold">-6</text>
+
+                        <rect x="20" y="95" width="40" height="40" fill="white" stroke="#4CAF50" stroke-width="3" stroke-dasharray="5,3" rx="5"/>
+                        <text x="40" y="122" text-anchor="middle" fill="#4CAF50" font-size="16" font-weight="bold">?</text>
+                    </svg>
+                </div>
+                <h2>Rekenslang</h2>
+                <p>Los de sommen op!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scherm 2: Instellingen -->
+    <div id="settings-screen" class="screen">
+        <h1>Rekenslang Instellingen</h1>
+        <div class="settings-container">
+            <div class="setting-group">
+                <label>Startgetal:</label>
+                <input type="number" id="start-number" value="1" min="0" max="100">
+            </div>
+            <div class="setting-group">
+                <label>Hoogste getal in bewerking:</label>
+                <input type="number" id="max-operation" value="10" min="1" max="50">
+            </div>
+            <div class="setting-group">
+                <label>Breedte (vakjes per rij):</label>
+                <input type="number" id="grid-width" value="5" min="3" max="8">
+            </div>
+            <div class="setting-group">
+                <label>Aantal rijen:</label>
+                <input type="number" id="grid-rows" value="4" min="2" max="8">
+            </div>
+            <div class="setting-group">
+                <label>Rekensymbolen:</label>
+                <div class="operator-buttons">
+                    <button class="operator-btn selected" data-op="+">+</button>
+                    <button class="operator-btn selected" data-op="-">−</button>
+                    <button class="operator-btn" data-op="*">×</button>
+                    <button class="operator-btn" data-op="/">÷</button>
+                </div>
+            </div>
+            <div class="button-row">
+                <button class="back-btn" onclick="goToSelection()">← Terug</button>
+                <button class="start-btn" onclick="startGame()">Start!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scherm 3: Het spel -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <button class="back-btn small" onclick="goToSettings()">← Terug</button>
+            <div class="timer"><span id="timer-display">00:00</span></div>
+        </div>
+        <div class="snake-wrapper">
+            <div class="snake-grid" id="snake-grid">
+                <!-- Hier komt de rekenslang -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cijferinvoer popup -->
+    <div id="number-input-popup" class="popup hidden">
+        <div class="popup-content">
+            <div class="input-display" id="input-display">_</div>
+            <div class="number-pad">
+                <button class="num-btn" onclick="inputNumber(1)">1</button>
+                <button class="num-btn" onclick="inputNumber(2)">2</button>
+                <button class="num-btn" onclick="inputNumber(3)">3</button>
+                <button class="num-btn" onclick="inputNumber(4)">4</button>
+                <button class="num-btn" onclick="inputNumber(5)">5</button>
+                <button class="num-btn" onclick="inputNumber(6)">6</button>
+                <button class="num-btn" onclick="inputNumber(7)">7</button>
+                <button class="num-btn" onclick="inputNumber(8)">8</button>
+                <button class="num-btn" onclick="inputNumber(9)">9</button>
+                <button class="num-btn clear-btn" onclick="clearInput()">←</button>
+                <button class="num-btn" onclick="inputNumber(0)">0</button>
+                <button class="num-btn confirm-btn" onclick="confirmInput()">OK</button>
+            </div>
+            <button class="close-popup-btn" onclick="closePopup()">Sluiten</button>
+        </div>
+    </div>
+
+    <!-- Vuurwerk canvas -->
+    <canvas id="fireworks-canvas"></canvas>
+
+    <script src="sounds.js"></script>
+    <script src="fireworks.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
