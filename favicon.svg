@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="snakeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#66BB6A"/>
+      <stop offset="50%" style="stop-color:#4CAF50"/>
+      <stop offset="100%" style="stop-color:#43A047"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B6B"/>
+      <stop offset="50%" style="stop-color:#4ECDC4"/>
+      <stop offset="100%" style="stop-color:#45B7D1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Achtergrond cirkel -->
+  <circle cx="32" cy="32" r="30" fill="url(#bgGrad)"/>
+
+  <!-- Slang lichaam -->
+  <path d="M12 45 Q12 32 22 32 L32 32 Q42 32 42 22 Q42 14 50 14"
+        stroke="url(#snakeGrad)"
+        stroke-width="8"
+        fill="none"
+        stroke-linecap="round"/>
+
+  <!-- Slang patroon -->
+  <path d="M12 45 Q12 32 22 32 L32 32 Q42 32 42 22 Q42 14 50 14"
+        stroke="#90EE90"
+        stroke-width="4"
+        fill="none"
+        stroke-linecap="round"
+        stroke-dasharray="4 6"/>
+
+  <!-- Slang hoofd -->
+  <ellipse cx="52" cy="14" rx="7" ry="5" fill="#4CAF50"/>
+  <ellipse cx="52" cy="14" rx="5" ry="3.5" fill="#66BB6A"/>
+
+  <!-- Oog -->
+  <circle cx="54" cy="12" r="2.5" fill="white"/>
+  <circle cx="55" cy="12" r="1.2" fill="#333"/>
+
+  <!-- Tong -->
+  <path d="M58 14 L62 12 M58 14 L62 16" stroke="#e74c3c" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Staart -->
+  <ellipse cx="12" cy="47" rx="3" ry="2" fill="#4CAF50" transform="rotate(-30 12 47)"/>
+
+  <!-- Getallen decoratie -->
+  <text x="18" y="52" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">123</text>
+</svg>

@@ -5,6 +5,58 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+/* ========== Accessibility Utilities ========== */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #3F51B5;
+    color: white;
+    padding: 10px 20px;
+    z-index: 9999;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 0 0 8px 0;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Keyboard focus styles */
+.keyboard-focus {
+    outline: 3px solid #FF6B6B !important;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Focus visible for all interactive elements */
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid #4ECDC4;
+    outline-offset: 2px;
+}
+
+.game-card:focus-visible {
+    outline: 4px solid #FF6B6B;
+    outline-offset: 4px;
+    transform: translateY(-10px) scale(1.03);
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 25%, #4ECDC4 50%, #45B7D1 75%, #96CEB4 100%);
@@ -36,12 +88,60 @@ body {
     padding-top: 40px;
 }
 
+.selection-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.selection-header h1 {
+    color: white;
+    font-size: 2.5rem;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+    animation: bounceIn 0.8s ease;
+    margin: 0;
+}
+
 #game-selection h1 {
     color: white;
     font-size: 2.5rem;
-    margin-bottom: 40px;
     text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
     animation: bounceIn 0.8s ease;
+}
+
+.mute-btn {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mute-btn:hover {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.mute-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.mute-btn[aria-pressed="true"] {
+    background: rgba(255, 100, 100, 0.9);
 }
 
 @keyframes bounceIn {
@@ -321,6 +421,22 @@ body {
     font-weight: bold;
     color: #333;
     box-shadow: 0 4px 15px rgba(255, 217, 61, 0.5);
+}
+
+.mute-btn.small {
+    position: static;
+    transform: none;
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+}
+
+.mute-btn.small:hover {
+    transform: scale(1.1);
+}
+
+.mute-btn.small:active {
+    transform: scale(0.95);
 }
 
 .snake-wrapper {
@@ -1016,6 +1132,432 @@ body {
 .binary-num-btn.one:active {
     transform: scale(0.95);
     background: linear-gradient(145deg, #A5D6A7, #81C784);
+}
+
+/* ========== Wisselgeld spel ========== */
+.change-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: auto;
+    padding: 10px;
+}
+
+.change-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.change-product {
+    background: linear-gradient(145deg, #FFF8E1, #FFECB3);
+    border-radius: 20px;
+    padding: 20px 30px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    border: 3px solid #FFB74D;
+}
+
+.product-emoji {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.product-name {
+    font-size: 1.3rem;
+    color: #5D4037;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #E65100;
+}
+
+.change-target-area {
+    background: linear-gradient(145deg, #FCE4EC, #F8BBD9);
+    border-radius: 25px;
+    padding: 25px;
+    text-align: center;
+    min-width: 250px;
+    min-height: 150px;
+    border: 4px dashed #EC407A;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.change-target-area.drag-over {
+    background: linear-gradient(145deg, #F8BBD9, #F48FB1);
+    border-style: solid;
+    transform: scale(1.02);
+}
+
+.change-target-area.correct-answer {
+    animation: correctPulse 0.5s ease;
+    background: linear-gradient(145deg, #C8E6C9, #A5D6A7);
+    border-color: #4CAF50;
+}
+
+.change-target-area.wrong-answer {
+    animation: wrongShake 0.5s ease;
+    background: linear-gradient(145deg, #FFCDD2, #EF9A9A);
+    border-color: #F44336;
+}
+
+.piggy-bank {
+    font-size: 3.5rem;
+}
+
+.current-amount {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #AD1457;
+    transition: color 0.3s;
+}
+
+.current-amount.correct {
+    color: #2E7D32;
+}
+
+.current-amount.over {
+    color: #C62828;
+}
+
+.target-hint {
+    font-size: 0.9rem;
+    color: #AD1457;
+    transition: color 0.3s;
+}
+
+.target-hint.hint-error {
+    color: #C62828;
+    font-weight: bold;
+}
+
+.change-coins-area {
+    background: linear-gradient(145deg, #E3F2FD, #BBDEFB);
+    border-radius: 15px;
+    padding: 15px;
+    width: 100%;
+}
+
+.coins-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.coin-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.coin {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 3px solid;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.coin:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.coin:active {
+    transform: scale(0.95);
+}
+
+.coin[data-coin="200"], .coin-stack[data-coin="200"] .coin {
+    background: linear-gradient(145deg, #FFD700, #FFA500);
+    border-color: #DAA520;
+    color: #8B4513;
+}
+
+.coin[data-coin="100"], .coin-stack[data-coin="100"] .coin {
+    background: linear-gradient(145deg, #FFE082, #FFD54F);
+    border-color: #FFC107;
+    color: #5D4037;
+}
+
+.coin[data-coin="50"], .coin-stack[data-coin="50"] .coin {
+    background: linear-gradient(145deg, #D4A574, #B8860B);
+    border-color: #8B4513;
+    color: #FFFFFF;
+}
+
+.coin[data-coin="20"], .coin-stack[data-coin="20"] .coin,
+.coin[data-coin="10"], .coin-stack[data-coin="10"] .coin,
+.coin[data-coin="5"], .coin-stack[data-coin="5"] .coin {
+    background: linear-gradient(145deg, #D4A574, #CD853F);
+    border-color: #8B4513;
+    color: #5D3A1A;
+}
+
+.coin[data-coin="2"], .coin-stack[data-coin="2"] .coin,
+.coin[data-coin="1"], .coin-stack[data-coin="1"] .coin {
+    background: linear-gradient(145deg, #E8E8E8, #A8A8A8);
+    border-color: #808080;
+    color: #333;
+}
+
+.selected-coins-area {
+    background: rgba(255,255,255,0.8);
+    border-radius: 12px;
+    padding: 12px;
+    width: 100%;
+    min-height: 60px;
+}
+
+.selected-coins-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.selected-coins-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.no-coins {
+    color: #999;
+    font-style: italic;
+}
+
+.selected-coin {
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #FFE082, #FFD54F);
+    border: 2px solid #FFC107;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.selected-coin:hover {
+    background: linear-gradient(145deg, #FFCDD2, #EF9A9A);
+    border-color: #F44336;
+}
+
+.remove-coin {
+    font-size: 1.1rem;
+    color: #999;
+}
+
+.selected-coin:hover .remove-coin {
+    color: #C62828;
+}
+
+.change-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.reset-btn, .check-btn {
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.reset-btn {
+    background: linear-gradient(145deg, #FFCDD2, #EF9A9A);
+    color: #C62828;
+}
+
+.reset-btn:hover {
+    transform: scale(1.05);
+}
+
+.check-btn {
+    background: linear-gradient(145deg, #C8E6C9, #A5D6A7);
+    color: #2E7D32;
+}
+
+.check-btn:hover {
+    transform: scale(1.05);
+}
+
+.round-display {
+    background: rgba(255,255,255,0.8);
+    padding: 8px 15px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #666;
+}
+
+.settings-info {
+    background: rgba(255,255,255,0.5);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.settings-info p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* ========== Klokkijken spel ========== */
+.clock-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: auto;
+    padding: 10px;
+}
+
+.clock-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.analog-clock {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #FFFDE7, #FFF9C4);
+    border: 8px solid #5D4037;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 30px rgba(0,0,0,0.1);
+}
+
+.clock-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.clock-number {
+    position: absolute;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #5D4037;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.clock-hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    border-radius: 4px;
+}
+
+.hour-hand {
+    width: 6px;
+    height: 55px;
+    background: #333;
+    margin-left: -3px;
+}
+
+.minute-hand {
+    width: 4px;
+    height: 75px;
+    background: #333;
+    margin-left: -2px;
+}
+
+.clock-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    background: #E53935;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.time-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.time-option {
+    padding: 18px 25px;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #E3F2FD, #BBDEFB);
+    border: 3px solid #1976D2;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #1565C0;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.time-option:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.time-option:active {
+    transform: scale(0.98);
+}
+
+.time-option.correct {
+    background: linear-gradient(145deg, #C8E6C9, #A5D6A7);
+    border-color: #4CAF50;
+    color: #2E7D32;
+}
+
+.time-option.wrong {
+    background: linear-gradient(145deg, #FFCDD2, #EF9A9A);
+    border-color: #F44336;
+    color: #C62828;
+}
+
+.clock-question {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #5D4037;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 /* ========== Vuurwerk canvas ========== */

@@ -1,0 +1,52 @@
+{
+  "name": "rekenslang",
+  "version": "1.0.0",
+  "description": "Educatieve rekenspelletjes voor kinderen: Rekenslang, Rekenpiramide, Sudoku en Binary",
+  "main": "game.js",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve . -l 3000",
+    "build": "npm run lint && npm run minify",
+    "lint": "npx eslint *.js --fix || true",
+    "minify": "npm run minify:js && npm run minify:css",
+    "minify:js": "npx terser game.js pyramid.js sudoku.js binary.js sounds.js fireworks.js config.js timer.js victory.js keyboard.js -o dist/bundle.min.js -c -m",
+    "minify:css": "npx csso styles.css -o dist/styles.min.css",
+    "clean": "rm -rf dist && mkdir dist",
+    "prebuild": "npm run clean",
+    "test": "echo \"Info: No tests configured yet\" && exit 0"
+  },
+  "keywords": [
+    "education",
+    "math",
+    "games",
+    "children",
+    "rekenslang",
+    "sudoku",
+    "binary",
+    "pyramid"
+  ],
+  "author": "Rekenslang Team",
+  "license": "MIT",
+  "devDependencies": {
+    "csso-cli": "^4.0.2",
+    "eslint": "^8.57.0",
+    "serve": "^14.2.1",
+    "terser": "^5.27.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "not dead",
+    "> 0.5%"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": ""
+}

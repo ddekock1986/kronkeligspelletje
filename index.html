@@ -3,499 +3,897 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Spelletjes voor Romée</title>
+    <meta name="description" content="Educatieve rekenspelletjes voor kinderen: Rekenslang, Rekenpiramide, Sudoku en Binary">
+    <title>Spelletjes voor Romee</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Scherm 1: Spelkeuze -->
-    <div id="game-selection" class="screen active">
-        <h1>Kies een spelletje!</h1>
-        <div class="game-options">
-            <!-- Rekenslang kaart -->
-            <div class="game-card" onclick="selectGame('rekenslang')">
-                <div class="game-icon">
-                    <svg viewBox="0 0 200 160" class="snake-svg">
-                        <path d="M25 120 Q25 90 50 90 L80 90 Q110 90 110 60 Q110 30 140 30 L160 30"
-                              stroke="url(#snakeGradient)" stroke-width="24" fill="none" stroke-linecap="round"/>
-                        <path d="M25 120 Q25 90 50 90 L80 90 Q110 90 110 60 Q110 30 140 30 L160 30"
-                              stroke="#90EE90" stroke-width="14" fill="none" stroke-linecap="round"
-                              stroke-dasharray="8 12" stroke-dashoffset="4"/>
-                        <ellipse cx="172" cy="30" rx="18" ry="14" fill="#4CAF50"/>
-                        <ellipse cx="172" cy="30" rx="14" ry="10" fill="#66BB6A"/>
-                        <circle cx="178" cy="24" r="6" fill="white"/>
-                        <circle cx="180" cy="24" r="3" fill="#333"/>
-                        <circle cx="181" cy="23" r="1" fill="white"/>
-                        <path d="M190 30 L200 25 M190 30 L200 35" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                        <circle cx="175" cy="34" r="3" fill="#FF9999" opacity="0.6"/>
-                        <ellipse cx="25" cy="125" rx="8" ry="5" fill="#4CAF50" transform="rotate(-30 25 125)"/>
-                        <circle cx="50" cy="85" r="4" fill="#81C784"/>
-                        <circle cx="75" cy="92" r="3" fill="#81C784"/>
-                        <circle cx="105" cy="65" r="4" fill="#81C784"/>
-                        <circle cx="130" cy="32" r="3" fill="#81C784"/>
-                        <defs>
-                            <linearGradient id="snakeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#66BB6A"/>
-                                <stop offset="50%" style="stop-color:#4CAF50"/>
-                                <stop offset="100%" style="stop-color:#43A047"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-                <h2>Rekenslang</h2>
-                <p>Los de sommen op!</p>
-            </div>
+    <!-- Skip link voor toetsenbordnavigatie -->
+    <a href="#main-content" class="skip-link" aria-label="Ga naar hoofdinhoud">Ga naar inhoud</a>
 
-            <!-- Rekenpiramide kaart -->
-            <div class="game-card" onclick="selectGame('rekenpiramide')">
-                <div class="game-icon">
-                    <svg viewBox="0 0 200 160" class="pyramid-svg">
-                        <defs>
-                            <linearGradient id="pyramidGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" style="stop-color:#FFD54F"/>
-                                <stop offset="100%" style="stop-color:#FF9800"/>
-                            </linearGradient>
-                            <linearGradient id="pyramidGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" style="stop-color:#FFF176"/>
-                                <stop offset="100%" style="stop-color:#FFB74D"/>
-                            </linearGradient>
-                        </defs>
-                        <rect x="75" y="15" width="50" height="35" rx="6" fill="url(#pyramidGradient)" stroke="#E65100" stroke-width="2"/>
-                        <text x="100" y="40" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">15</text>
-                        <rect x="45" y="55" width="50" height="35" rx="6" fill="url(#pyramidGradient2)" stroke="#E65100" stroke-width="2"/>
-                        <text x="70" y="80" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">6</text>
-                        <rect x="105" y="55" width="50" height="35" rx="6" fill="url(#pyramidGradient)" stroke="#E65100" stroke-width="2"/>
-                        <text x="130" y="80" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">?</text>
-                        <rect x="15" y="95" width="50" height="35" rx="6" fill="url(#pyramidGradient2)" stroke="#E65100" stroke-width="2"/>
-                        <text x="40" y="120" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">2</text>
-                        <rect x="75" y="95" width="50" height="35" rx="6" fill="url(#pyramidGradient)" stroke="#E65100" stroke-width="2"/>
-                        <text x="100" y="120" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">?</text>
-                        <rect x="135" y="95" width="50" height="35" rx="6" fill="url(#pyramidGradient2)" stroke="#E65100" stroke-width="2"/>
-                        <text x="160" y="120" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">5</text>
-                        <circle cx="175" cy="25" r="12" fill="#FFE082" opacity="0.8"/>
-                        <circle cx="175" cy="25" r="8" fill="#FFD54F"/>
-                    </svg>
-                </div>
-                <h2>Rekenpiramide</h2>
-                <p>Tel de blokken op!</p>
+    <main id="main-content">
+        <!-- Scherm 1: Spelkeuze -->
+        <div id="game-selection" class="screen active" role="region" aria-label="Spelkeuze">
+            <div class="selection-header">
+                <h1>Kies een spelletje!</h1>
+                <button id="mute-btn" class="mute-btn" onclick="toggleMute()" aria-label="Geluid uitzetten" aria-pressed="false">🔊</button>
             </div>
-
-            <!-- Binary kaart -->
-            <div class="game-card" onclick="selectGame('binary')">
-                <div class="game-icon">
-                    <svg viewBox="0 0 200 160" class="binary-svg">
-                        <defs>
-                            <linearGradient id="binaryGradient1" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" style="stop-color:#E8F5E9"/>
-                                <stop offset="100%" style="stop-color:#C8E6C9"/>
-                            </linearGradient>
-                            <linearGradient id="binaryGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" style="stop-color:#FFEBEE"/>
-                                <stop offset="100%" style="stop-color:#FFCDD2"/>
-                            </linearGradient>
-                        </defs>
-                        <!-- 4x4 Grid -->
-                        <rect x="30" y="20" width="140" height="120" rx="8" fill="white" stroke="#00897B" stroke-width="3"/>
-                        <!-- Grid lijnen -->
-                        <line x1="65" y1="20" x2="65" y2="140" stroke="#26A69A" stroke-width="1.5"/>
-                        <line x1="100" y1="20" x2="100" y2="140" stroke="#26A69A" stroke-width="1.5"/>
-                        <line x1="135" y1="20" x2="135" y2="140" stroke="#26A69A" stroke-width="1.5"/>
-                        <line x1="30" y1="50" x2="170" y2="50" stroke="#26A69A" stroke-width="1.5"/>
-                        <line x1="30" y1="80" x2="170" y2="80" stroke="#26A69A" stroke-width="1.5"/>
-                        <line x1="30" y1="110" x2="170" y2="110" stroke="#26A69A" stroke-width="1.5"/>
-                        <!-- Rij 1 -->
-                        <rect x="32" y="22" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
-                        <text x="47" y="42" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
-                        <rect x="67" y="22" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
-                        <text x="82" y="42" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
-                        <text x="117" y="42" text-anchor="middle" fill="#00897B" font-size="16" font-weight="bold">?</text>
-                        <rect x="137" y="22" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
-                        <text x="152" y="42" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
-                        <!-- Rij 2 -->
-                        <rect x="32" y="52" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
-                        <text x="47" y="72" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
-                        <text x="82" y="72" text-anchor="middle" fill="#00897B" font-size="16" font-weight="bold">?</text>
-                        <rect x="102" y="52" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
-                        <text x="117" y="72" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
-                        <rect x="137" y="52" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
-                        <text x="152" y="72" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
-                        <!-- Rij 3 -->
-                        <text x="47" y="102" text-anchor="middle" fill="#00897B" font-size="16" font-weight="bold">?</text>
-                        <rect x="67" y="82" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
-                        <text x="82" y="102" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
-                        <rect x="102" y="82" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
-                        <text x="117" y="102" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
-                        <text x="152" y="102" text-anchor="middle" fill="#00897B" font-size="16" font-weight="bold">?</text>
-                        <!-- Rij 4 -->
-                        <rect x="32" y="112" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
-                        <text x="47" y="132" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
-                        <rect x="67" y="112" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
-                        <text x="82" y="132" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
-                        <rect x="102" y="112" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
-                        <text x="117" y="132" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
-                        <rect x="137" y="112" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
-                        <text x="152" y="132" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
-                    </svg>
+            <div class="game-options" role="list" aria-label="Beschikbare spellen">
+                <!-- Rekenslang kaart -->
+                <div class="game-card"
+                     role="listitem"
+                     tabindex="0"
+                     onclick="selectGame('rekenslang')"
+                     onkeydown="handleCardKeydown(event, 'rekenslang')"
+                     aria-label="Rekenslang - Los de sommen op">
+                    <div class="game-icon" aria-hidden="true">
+                        <svg viewBox="0 0 200 160" class="snake-svg" role="img" aria-label="Slang icoon">
+                            <path d="M25 120 Q25 90 50 90 L80 90 Q110 90 110 60 Q110 30 140 30 L160 30"
+                                  stroke="url(#snakeGradient)" stroke-width="24" fill="none" stroke-linecap="round"/>
+                            <path d="M25 120 Q25 90 50 90 L80 90 Q110 90 110 60 Q110 30 140 30 L160 30"
+                                  stroke="#90EE90" stroke-width="14" fill="none" stroke-linecap="round"
+                                  stroke-dasharray="8 12" stroke-dashoffset="4"/>
+                            <ellipse cx="172" cy="30" rx="18" ry="14" fill="#4CAF50"/>
+                            <ellipse cx="172" cy="30" rx="14" ry="10" fill="#66BB6A"/>
+                            <circle cx="178" cy="24" r="6" fill="white"/>
+                            <circle cx="180" cy="24" r="3" fill="#333"/>
+                            <circle cx="181" cy="23" r="1" fill="white"/>
+                            <path d="M190 30 L200 25 M190 30 L200 35" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                            <circle cx="175" cy="34" r="3" fill="#FF9999" opacity="0.6"/>
+                            <ellipse cx="25" cy="125" rx="8" ry="5" fill="#4CAF50" transform="rotate(-30 25 125)"/>
+                            <circle cx="50" cy="85" r="4" fill="#81C784"/>
+                            <circle cx="75" cy="92" r="3" fill="#81C784"/>
+                            <circle cx="105" cy="65" r="4" fill="#81C784"/>
+                            <circle cx="130" cy="32" r="3" fill="#81C784"/>
+                            <defs>
+                                <linearGradient id="snakeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#66BB6A"/>
+                                    <stop offset="50%" style="stop-color:#4CAF50"/>
+                                    <stop offset="100%" style="stop-color:#43A047"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h2>Rekenslang</h2>
+                    <p>Los de sommen op!</p>
                 </div>
-                <h2>Binary</h2>
-                <p>Vul nullen en enen in!</p>
-            </div>
 
-            <!-- Sudoku kaart -->
-            <div class="game-card" onclick="selectGame('sudoku')">
-                <div class="game-icon">
-                    <svg viewBox="0 0 200 160" class="sudoku-svg">
-                        <defs>
-                            <linearGradient id="sudokuGradient1" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" style="stop-color:#E3F2FD"/>
-                                <stop offset="100%" style="stop-color:#BBDEFB"/>
-                            </linearGradient>
-                            <linearGradient id="sudokuGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" style="stop-color:#C5CAE9"/>
-                                <stop offset="100%" style="stop-color:#9FA8DA"/>
-                            </linearGradient>
-                        </defs>
-                        <!-- 4x4 Grid -->
-                        <rect x="30" y="20" width="140" height="120" rx="8" fill="white" stroke="#3F51B5" stroke-width="3"/>
-                        <!-- Dikke lijnen voor 2x2 blokken -->
-                        <line x1="100" y1="20" x2="100" y2="140" stroke="#3F51B5" stroke-width="3"/>
-                        <line x1="30" y1="80" x2="170" y2="80" stroke="#3F51B5" stroke-width="3"/>
-                        <!-- Dunne lijnen -->
-                        <line x1="65" y1="20" x2="65" y2="140" stroke="#7986CB" stroke-width="1"/>
-                        <line x1="135" y1="20" x2="135" y2="140" stroke="#7986CB" stroke-width="1"/>
-                        <line x1="30" y1="50" x2="170" y2="50" stroke="#7986CB" stroke-width="1"/>
-                        <line x1="30" y1="110" x2="170" y2="110" stroke="#7986CB" stroke-width="1"/>
-                        <!-- Getallen -->
-                        <rect x="32" y="22" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
-                        <text x="47" y="42" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">1</text>
-                        <text x="82" y="42" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
-                        <rect x="102" y="22" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
-                        <text x="117" y="42" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">3</text>
-                        <text x="152" y="42" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
-                        <text x="47" y="72" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
-                        <rect x="67" y="52" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
-                        <text x="82" y="72" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">4</text>
-                        <text x="117" y="72" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
-                        <rect x="137" y="52" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
-                        <text x="152" y="72" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">1</text>
-                        <rect x="32" y="82" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
-                        <text x="47" y="102" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">4</text>
-                        <text x="82" y="102" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
-                        <text x="117" y="102" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
-                        <rect x="137" y="82" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
-                        <text x="152" y="102" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">3</text>
-                        <text x="47" y="132" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
-                        <rect x="67" y="112" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
-                        <text x="82" y="132" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">2</text>
-                        <rect x="102" y="112" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
-                        <text x="117" y="132" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">4</text>
-                        <text x="152" y="132" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
-                    </svg>
+                <!-- Rekenpiramide kaart -->
+                <div class="game-card"
+                     role="listitem"
+                     tabindex="0"
+                     onclick="selectGame('rekenpiramide')"
+                     onkeydown="handleCardKeydown(event, 'rekenpiramide')"
+                     aria-label="Rekenpiramide - Tel de blokken op">
+                    <div class="game-icon" aria-hidden="true">
+                        <svg viewBox="0 0 200 160" class="pyramid-svg" role="img" aria-label="Piramide icoon">
+                            <defs>
+                                <linearGradient id="pyramidGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#FFD54F"/>
+                                    <stop offset="100%" style="stop-color:#FF9800"/>
+                                </linearGradient>
+                                <linearGradient id="pyramidGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#FFF176"/>
+                                    <stop offset="100%" style="stop-color:#FFB74D"/>
+                                </linearGradient>
+                            </defs>
+                            <rect x="75" y="15" width="50" height="35" rx="6" fill="url(#pyramidGradient)" stroke="#E65100" stroke-width="2"/>
+                            <text x="100" y="40" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">15</text>
+                            <rect x="45" y="55" width="50" height="35" rx="6" fill="url(#pyramidGradient2)" stroke="#E65100" stroke-width="2"/>
+                            <text x="70" y="80" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">6</text>
+                            <rect x="105" y="55" width="50" height="35" rx="6" fill="url(#pyramidGradient)" stroke="#E65100" stroke-width="2"/>
+                            <text x="130" y="80" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">?</text>
+                            <rect x="15" y="95" width="50" height="35" rx="6" fill="url(#pyramidGradient2)" stroke="#E65100" stroke-width="2"/>
+                            <text x="40" y="120" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">2</text>
+                            <rect x="75" y="95" width="50" height="35" rx="6" fill="url(#pyramidGradient)" stroke="#E65100" stroke-width="2"/>
+                            <text x="100" y="120" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">?</text>
+                            <rect x="135" y="95" width="50" height="35" rx="6" fill="url(#pyramidGradient2)" stroke="#E65100" stroke-width="2"/>
+                            <text x="160" y="120" text-anchor="middle" fill="#5D4037" font-size="18" font-weight="bold">5</text>
+                            <circle cx="175" cy="25" r="12" fill="#FFE082" opacity="0.8"/>
+                            <circle cx="175" cy="25" r="8" fill="#FFD54F"/>
+                        </svg>
+                    </div>
+                    <h2>Rekenpiramide</h2>
+                    <p>Tel de blokken op!</p>
                 </div>
-                <h2>Sudoku</h2>
-                <p>Vul de getallen in!</p>
+
+                <!-- Binary kaart -->
+                <div class="game-card"
+                     role="listitem"
+                     tabindex="0"
+                     onclick="selectGame('binary')"
+                     onkeydown="handleCardKeydown(event, 'binary')"
+                     aria-label="Binary - Vul nullen en enen in">
+                    <div class="game-icon" aria-hidden="true">
+                        <svg viewBox="0 0 200 160" class="binary-svg" role="img" aria-label="Binary icoon">
+                            <defs>
+                                <linearGradient id="binaryGradient1" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#E8F5E9"/>
+                                    <stop offset="100%" style="stop-color:#C8E6C9"/>
+                                </linearGradient>
+                                <linearGradient id="binaryGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#FFEBEE"/>
+                                    <stop offset="100%" style="stop-color:#FFCDD2"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- 4x4 Grid -->
+                            <rect x="30" y="20" width="140" height="120" rx="8" fill="white" stroke="#00897B" stroke-width="3"/>
+                            <!-- Grid lijnen -->
+                            <line x1="65" y1="20" x2="65" y2="140" stroke="#26A69A" stroke-width="1.5"/>
+                            <line x1="100" y1="20" x2="100" y2="140" stroke="#26A69A" stroke-width="1.5"/>
+                            <line x1="135" y1="20" x2="135" y2="140" stroke="#26A69A" stroke-width="1.5"/>
+                            <line x1="30" y1="50" x2="170" y2="50" stroke="#26A69A" stroke-width="1.5"/>
+                            <line x1="30" y1="80" x2="170" y2="80" stroke="#26A69A" stroke-width="1.5"/>
+                            <line x1="30" y1="110" x2="170" y2="110" stroke="#26A69A" stroke-width="1.5"/>
+                            <!-- Rij 1 -->
+                            <rect x="32" y="22" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
+                            <text x="47" y="42" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
+                            <rect x="67" y="22" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
+                            <text x="82" y="42" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
+                            <text x="117" y="42" text-anchor="middle" fill="#00897B" font-size="16" font-weight="bold">?</text>
+                            <rect x="137" y="22" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
+                            <text x="152" y="42" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
+                            <!-- Rij 2 -->
+                            <rect x="32" y="52" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
+                            <text x="47" y="72" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
+                            <text x="82" y="72" text-anchor="middle" fill="#00897B" font-size="16" font-weight="bold">?</text>
+                            <rect x="102" y="52" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
+                            <text x="117" y="72" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
+                            <rect x="137" y="52" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
+                            <text x="152" y="72" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
+                            <!-- Rij 3 -->
+                            <text x="47" y="102" text-anchor="middle" fill="#00897B" font-size="16" font-weight="bold">?</text>
+                            <rect x="67" y="82" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
+                            <text x="82" y="102" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
+                            <rect x="102" y="82" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
+                            <text x="117" y="102" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
+                            <text x="152" y="102" text-anchor="middle" fill="#00897B" font-size="16" font-weight="bold">?</text>
+                            <!-- Rij 4 -->
+                            <rect x="32" y="112" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
+                            <text x="47" y="132" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
+                            <rect x="67" y="112" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
+                            <text x="82" y="132" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
+                            <rect x="102" y="112" width="31" height="26" fill="url(#binaryGradient1)" rx="4"/>
+                            <text x="117" y="132" text-anchor="middle" fill="#2E7D32" font-size="18" font-weight="bold">1</text>
+                            <rect x="137" y="112" width="31" height="26" fill="url(#binaryGradient2)" rx="4"/>
+                            <text x="152" y="132" text-anchor="middle" fill="#C62828" font-size="18" font-weight="bold">0</text>
+                        </svg>
+                    </div>
+                    <h2>Binary</h2>
+                    <p>Vul nullen en enen in!</p>
+                </div>
+
+                <!-- Sudoku kaart -->
+                <div class="game-card"
+                     role="listitem"
+                     tabindex="0"
+                     onclick="selectGame('sudoku')"
+                     onkeydown="handleCardKeydown(event, 'sudoku')"
+                     aria-label="Sudoku - Vul de getallen in">
+                    <div class="game-icon" aria-hidden="true">
+                        <svg viewBox="0 0 200 160" class="sudoku-svg" role="img" aria-label="Sudoku icoon">
+                            <defs>
+                                <linearGradient id="sudokuGradient1" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#E3F2FD"/>
+                                    <stop offset="100%" style="stop-color:#BBDEFB"/>
+                                </linearGradient>
+                                <linearGradient id="sudokuGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#C5CAE9"/>
+                                    <stop offset="100%" style="stop-color:#9FA8DA"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- 4x4 Grid -->
+                            <rect x="30" y="20" width="140" height="120" rx="8" fill="white" stroke="#3F51B5" stroke-width="3"/>
+                            <!-- Dikke lijnen voor 2x2 blokken -->
+                            <line x1="100" y1="20" x2="100" y2="140" stroke="#3F51B5" stroke-width="3"/>
+                            <line x1="30" y1="80" x2="170" y2="80" stroke="#3F51B5" stroke-width="3"/>
+                            <!-- Dunne lijnen -->
+                            <line x1="65" y1="20" x2="65" y2="140" stroke="#7986CB" stroke-width="1"/>
+                            <line x1="135" y1="20" x2="135" y2="140" stroke="#7986CB" stroke-width="1"/>
+                            <line x1="30" y1="50" x2="170" y2="50" stroke="#7986CB" stroke-width="1"/>
+                            <line x1="30" y1="110" x2="170" y2="110" stroke="#7986CB" stroke-width="1"/>
+                            <!-- Getallen -->
+                            <rect x="32" y="22" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
+                            <text x="47" y="42" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">1</text>
+                            <text x="82" y="42" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
+                            <rect x="102" y="22" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
+                            <text x="117" y="42" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">3</text>
+                            <text x="152" y="42" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
+                            <text x="47" y="72" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
+                            <rect x="67" y="52" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
+                            <text x="82" y="72" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">4</text>
+                            <text x="117" y="72" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
+                            <rect x="137" y="52" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
+                            <text x="152" y="72" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">1</text>
+                            <rect x="32" y="82" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
+                            <text x="47" y="102" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">4</text>
+                            <text x="82" y="102" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
+                            <text x="117" y="102" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
+                            <rect x="137" y="82" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
+                            <text x="152" y="102" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">3</text>
+                            <text x="47" y="132" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
+                            <rect x="67" y="112" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
+                            <text x="82" y="132" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">2</text>
+                            <rect x="102" y="112" width="31" height="26" fill="url(#sudokuGradient2)" rx="3"/>
+                            <text x="117" y="132" text-anchor="middle" fill="#1A237E" font-size="16" font-weight="bold">4</text>
+                            <text x="152" y="132" text-anchor="middle" fill="#5C6BC0" font-size="16" font-weight="bold">?</text>
+                        </svg>
+                    </div>
+                    <h2>Sudoku</h2>
+                    <p>Vul de getallen in!</p>
+                </div>
+
+                <!-- Wisselgeld kaart -->
+                <div class="game-card"
+                     role="listitem"
+                     tabindex="0"
+                     onclick="selectGame('wisselgeld')"
+                     onkeydown="handleCardKeydown(event, 'wisselgeld')"
+                     aria-label="Wisselgeld - Betaal met munten">
+                    <div class="game-icon" aria-hidden="true">
+                        <svg viewBox="0 0 200 160" class="change-svg" role="img" aria-label="Wisselgeld icoon">
+                            <defs>
+                                <linearGradient id="coinGold" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#FFD700"/>
+                                    <stop offset="100%" style="stop-color:#FFA500"/>
+                                </linearGradient>
+                                <linearGradient id="coinSilver" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#E8E8E8"/>
+                                    <stop offset="100%" style="stop-color:#A8A8A8"/>
+                                </linearGradient>
+                                <linearGradient id="coinCopper" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#D4A574"/>
+                                    <stop offset="100%" style="stop-color:#B8860B"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- Spaarvarken -->
+                            <ellipse cx="100" cy="55" rx="50" ry="35" fill="#FFB6C1"/>
+                            <ellipse cx="100" cy="55" rx="45" ry="30" fill="#FFC0CB"/>
+                            <circle cx="130" cy="45" r="10" fill="#FFB6C1"/>
+                            <circle cx="132" cy="43" r="3" fill="#333"/>
+                            <ellipse cx="145" cy="55" rx="8" ry="5" fill="#FFB6C1"/>
+                            <circle cx="147" cy="54" r="2" fill="#FF69B4"/>
+                            <rect x="85" y="25" width="30" height="8" rx="4" fill="#FF69B4"/>
+                            <!-- Munten -->
+                            <circle cx="45" cy="120" r="22" fill="url(#coinGold)" stroke="#DAA520" stroke-width="2"/>
+                            <text x="45" y="126" text-anchor="middle" fill="#8B4513" font-size="14" font-weight="bold">€2</text>
+                            <circle cx="100" cy="125" r="18" fill="url(#coinSilver)" stroke="#808080" stroke-width="2"/>
+                            <text x="100" y="130" text-anchor="middle" fill="#333" font-size="12" font-weight="bold">€1</text>
+                            <circle cx="150" cy="120" r="15" fill="url(#coinCopper)" stroke="#8B4513" stroke-width="2"/>
+                            <text x="150" y="125" text-anchor="middle" fill="#5D3A1A" font-size="10" font-weight="bold">50c</text>
+                        </svg>
+                    </div>
+                    <h2>Wisselgeld</h2>
+                    <p>Betaal met munten!</p>
+                </div>
+
+                <!-- Klokkijken kaart -->
+                <div class="game-card"
+                     role="listitem"
+                     tabindex="0"
+                     onclick="selectGame('klokkijken')"
+                     onkeydown="handleCardKeydown(event, 'klokkijken')"
+                     aria-label="Klokkijken - Hoe laat is het?">
+                    <div class="game-icon" aria-hidden="true">
+                        <svg viewBox="0 0 200 160" class="clock-svg" role="img" aria-label="Klok icoon">
+                            <defs>
+                                <linearGradient id="clockFace" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#FFFDE7"/>
+                                    <stop offset="100%" style="stop-color:#FFF9C4"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- Klok achtergrond -->
+                            <circle cx="100" cy="80" r="60" fill="url(#clockFace)" stroke="#5D4037" stroke-width="6"/>
+                            <circle cx="100" cy="80" r="55" fill="none" stroke="#8D6E63" stroke-width="2"/>
+                            <!-- Uur markeringen -->
+                            <line x1="100" y1="28" x2="100" y2="35" stroke="#5D4037" stroke-width="3"/>
+                            <line x1="100" y1="125" x2="100" y2="132" stroke="#5D4037" stroke-width="3"/>
+                            <line x1="47" y1="80" x2="54" y2="80" stroke="#5D4037" stroke-width="3"/>
+                            <line x1="146" y1="80" x2="153" y2="80" stroke="#5D4037" stroke-width="3"/>
+                            <!-- Kleine markeringen -->
+                            <circle cx="126" cy="35" r="2" fill="#8D6E63"/>
+                            <circle cx="145" cy="54" r="2" fill="#8D6E63"/>
+                            <circle cx="145" cy="106" r="2" fill="#8D6E63"/>
+                            <circle cx="126" cy="125" r="2" fill="#8D6E63"/>
+                            <circle cx="74" cy="125" r="2" fill="#8D6E63"/>
+                            <circle cx="55" cy="106" r="2" fill="#8D6E63"/>
+                            <circle cx="55" cy="54" r="2" fill="#8D6E63"/>
+                            <circle cx="74" cy="35" r="2" fill="#8D6E63"/>
+                            <!-- Wijzers -->
+                            <line x1="100" y1="80" x2="100" y2="45" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="100" y1="80" x2="130" y2="95" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                            <!-- Midden -->
+                            <circle cx="100" cy="80" r="5" fill="#E53935"/>
+                        </svg>
+                    </div>
+                    <h2>Klokkijken</h2>
+                    <p>Hoe laat is het?</p>
+                </div>
+
             </div>
         </div>
-    </div>
 
-    <!-- Scherm 2a: Instellingen Rekenslang -->
-    <div id="settings-screen-snake" class="screen">
-        <h1>Rekenslang</h1>
-        <div class="settings-container">
-            <div class="setting-group">
-                <label>Moeilijkheidsgraad:</label>
-                <div class="difficulty-buttons">
-                    <button class="difficulty-btn" data-difficulty="makkelijk" data-game="snake" onclick="selectDifficulty('makkelijk', 'snake')">
-                        <span class="diff-icon">⭐</span>
-                        <span class="diff-label">Makkelijk</span>
-                    </button>
-                    <button class="difficulty-btn selected" data-difficulty="normaal" data-game="snake" onclick="selectDifficulty('normaal', 'snake')">
-                        <span class="diff-icon">⭐⭐</span>
-                        <span class="diff-label">Normaal</span>
-                    </button>
-                    <button class="difficulty-btn" data-difficulty="moeilijk" data-game="snake" onclick="selectDifficulty('moeilijk', 'snake')">
-                        <span class="diff-icon">⭐⭐⭐</span>
-                        <span class="diff-label">Moeilijk</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="settings-advanced">
-                <div class="setting-row">
-                    <div class="setting-group half">
-                        <label>Startgetal:</label>
-                        <input type="number" id="snake-start-number" value="10" min="1" max="100">
-                    </div>
-                    <div class="setting-group half">
-                        <label>Max bewerking:</label>
-                        <input type="number" id="snake-max-operation" value="10" min="1" max="50">
-                    </div>
-                </div>
-                <div class="setting-row">
-                    <div class="setting-group half">
-                        <label>Breedte:</label>
-                        <input type="number" id="snake-grid-width" value="5" min="3" max="8">
-                    </div>
-                    <div class="setting-group half">
-                        <label>Rijen:</label>
-                        <input type="number" id="snake-grid-rows" value="4" min="2" max="8">
-                    </div>
-                </div>
+        <!-- Scherm 2a: Instellingen Rekenslang -->
+        <div id="settings-screen-snake" class="screen" role="region" aria-label="Rekenslang instellingen">
+            <h1>Rekenslang</h1>
+            <div class="settings-container">
                 <div class="setting-group">
-                    <label>Rekensymbolen:</label>
-                    <div class="operator-buttons" id="snake-operators">
-                        <button class="operator-btn selected" data-op="+">+</button>
-                        <button class="operator-btn selected" data-op="-">−</button>
-                        <button class="operator-btn" data-op="*">×</button>
-                        <button class="operator-btn" data-op="/">÷</button>
+                    <label id="snake-difficulty-label">Moeilijkheidsgraad:</label>
+                    <div class="difficulty-buttons" role="group" aria-labelledby="snake-difficulty-label">
+                        <button class="difficulty-btn"
+                                data-difficulty="makkelijk"
+                                data-game="snake"
+                                onclick="selectDifficulty('makkelijk', 'snake')"
+                                aria-label="Makkelijk - 1 ster">
+                            <span class="diff-icon" aria-hidden="true">⭐</span>
+                            <span class="diff-label">Makkelijk</span>
+                        </button>
+                        <button class="difficulty-btn selected"
+                                data-difficulty="normaal"
+                                data-game="snake"
+                                onclick="selectDifficulty('normaal', 'snake')"
+                                aria-label="Normaal - 2 sterren"
+                                aria-pressed="true">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐</span>
+                            <span class="diff-label">Normaal</span>
+                        </button>
+                        <button class="difficulty-btn"
+                                data-difficulty="moeilijk"
+                                data-game="snake"
+                                onclick="selectDifficulty('moeilijk', 'snake')"
+                                aria-label="Moeilijk - 3 sterren">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐⭐</span>
+                            <span class="diff-label">Moeilijk</span>
+                        </button>
                     </div>
                 </div>
-            </div>
 
-            <div class="button-row">
-                <button class="back-btn" onclick="goToSelection()">← Terug</button>
-                <button class="start-btn" onclick="startSnakeGame()">Start!</button>
+                <div class="settings-advanced">
+                    <div class="setting-row">
+                        <div class="setting-group half">
+                            <label for="snake-start-number">Startgetal:</label>
+                            <input type="number"
+                                   id="snake-start-number"
+                                   value="10"
+                                   min="1"
+                                   max="100"
+                                   aria-describedby="snake-start-help">
+                            <span id="snake-start-help" class="visually-hidden">Getal tussen 1 en 100</span>
+                        </div>
+                        <div class="setting-group half">
+                            <label for="snake-max-operation">Max bewerking:</label>
+                            <input type="number"
+                                   id="snake-max-operation"
+                                   value="10"
+                                   min="1"
+                                   max="50"
+                                   aria-describedby="snake-op-help">
+                            <span id="snake-op-help" class="visually-hidden">Getal tussen 1 en 50</span>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-group half">
+                            <label for="snake-grid-width">Breedte:</label>
+                            <input type="number"
+                                   id="snake-grid-width"
+                                   value="5"
+                                   min="3"
+                                   max="8"
+                                   aria-describedby="snake-width-help">
+                            <span id="snake-width-help" class="visually-hidden">Getal tussen 3 en 8</span>
+                        </div>
+                        <div class="setting-group half">
+                            <label for="snake-grid-rows">Rijen:</label>
+                            <input type="number"
+                                   id="snake-grid-rows"
+                                   value="4"
+                                   min="2"
+                                   max="8"
+                                   aria-describedby="snake-rows-help">
+                            <span id="snake-rows-help" class="visually-hidden">Getal tussen 2 en 8</span>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label id="snake-operators-label">Rekensymbolen:</label>
+                        <div class="operator-buttons" id="snake-operators" role="group" aria-labelledby="snake-operators-label">
+                            <button class="operator-btn selected"
+                                    data-op="+"
+                                    aria-label="Optellen"
+                                    aria-pressed="true">+</button>
+                            <button class="operator-btn selected"
+                                    data-op="-"
+                                    aria-label="Aftrekken"
+                                    aria-pressed="true">−</button>
+                            <button class="operator-btn"
+                                    data-op="*"
+                                    aria-label="Vermenigvuldigen"
+                                    aria-pressed="false">×</button>
+                            <button class="operator-btn"
+                                    data-op="/"
+                                    aria-label="Delen"
+                                    aria-pressed="false">÷</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button class="back-btn" onclick="goToSelection()" aria-label="Terug naar spelkeuze">← Terug</button>
+                    <button class="start-btn" onclick="startSnakeGame()" aria-label="Start Rekenslang spel">Start!</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Scherm 2b: Instellingen Rekenpiramide -->
-    <div id="settings-screen-pyramid" class="screen">
-        <h1>Rekenpiramide</h1>
-        <div class="settings-container">
-            <div class="setting-group">
-                <label>Moeilijkheidsgraad:</label>
-                <div class="difficulty-buttons">
-                    <button class="difficulty-btn" data-difficulty="makkelijk" data-game="pyramid" onclick="selectDifficulty('makkelijk', 'pyramid')">
-                        <span class="diff-icon">⭐</span>
-                        <span class="diff-label">Makkelijk</span>
-                    </button>
-                    <button class="difficulty-btn selected" data-difficulty="normaal" data-game="pyramid" onclick="selectDifficulty('normaal', 'pyramid')">
-                        <span class="diff-icon">⭐⭐</span>
-                        <span class="diff-label">Normaal</span>
-                    </button>
-                    <button class="difficulty-btn" data-difficulty="moeilijk" data-game="pyramid" onclick="selectDifficulty('moeilijk', 'pyramid')">
-                        <span class="diff-icon">⭐⭐⭐</span>
-                        <span class="diff-label">Moeilijk</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="settings-advanced">
-                <div class="setting-row">
-                    <div class="setting-group half">
-                        <label>Aantal lagen:</label>
-                        <input type="number" id="pyramid-layers" value="4" min="3" max="7">
-                    </div>
-                    <div class="setting-group half">
-                        <label>Max startgetal:</label>
-                        <input type="number" id="pyramid-max-base" value="10" min="1" max="20">
-                    </div>
-                </div>
+        <!-- Scherm 2b: Instellingen Rekenpiramide -->
+        <div id="settings-screen-pyramid" class="screen" role="region" aria-label="Rekenpiramide instellingen">
+            <h1>Rekenpiramide</h1>
+            <div class="settings-container">
                 <div class="setting-group">
-                    <label>Percentage verborgen:</label>
-                    <div class="slider-container">
-                        <input type="range" id="pyramid-hide-percent" min="30" max="70" value="50">
-                        <span id="pyramid-hide-percent-display">50%</span>
+                    <label id="pyramid-difficulty-label">Moeilijkheidsgraad:</label>
+                    <div class="difficulty-buttons" role="group" aria-labelledby="pyramid-difficulty-label">
+                        <button class="difficulty-btn"
+                                data-difficulty="makkelijk"
+                                data-game="pyramid"
+                                onclick="selectDifficulty('makkelijk', 'pyramid')"
+                                aria-label="Makkelijk - 1 ster">
+                            <span class="diff-icon" aria-hidden="true">⭐</span>
+                            <span class="diff-label">Makkelijk</span>
+                        </button>
+                        <button class="difficulty-btn selected"
+                                data-difficulty="normaal"
+                                data-game="pyramid"
+                                onclick="selectDifficulty('normaal', 'pyramid')"
+                                aria-label="Normaal - 2 sterren"
+                                aria-pressed="true">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐</span>
+                            <span class="diff-label">Normaal</span>
+                        </button>
+                        <button class="difficulty-btn"
+                                data-difficulty="moeilijk"
+                                data-game="pyramid"
+                                onclick="selectDifficulty('moeilijk', 'pyramid')"
+                                aria-label="Moeilijk - 3 sterren">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐⭐</span>
+                            <span class="diff-label">Moeilijk</span>
+                        </button>
                     </div>
                 </div>
-            </div>
 
-            <div class="button-row">
-                <button class="back-btn" onclick="goToSelection()">← Terug</button>
-                <button class="start-btn" onclick="startPyramidGame()">Start!</button>
-            </div>
-        </div>
-    </div>
+                <div class="settings-advanced">
+                    <div class="setting-row">
+                        <div class="setting-group half">
+                            <label for="pyramid-layers">Aantal lagen:</label>
+                            <input type="number"
+                                   id="pyramid-layers"
+                                   value="4"
+                                   min="3"
+                                   max="7"
+                                   aria-describedby="pyramid-layers-help">
+                            <span id="pyramid-layers-help" class="visually-hidden">Getal tussen 3 en 7</span>
+                        </div>
+                        <div class="setting-group half">
+                            <label for="pyramid-max-base">Max startgetal:</label>
+                            <input type="number"
+                                   id="pyramid-max-base"
+                                   value="10"
+                                   min="1"
+                                   max="20"
+                                   aria-describedby="pyramid-base-help">
+                            <span id="pyramid-base-help" class="visually-hidden">Getal tussen 1 en 20</span>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label for="pyramid-hide-percent">Percentage verborgen:</label>
+                        <div class="slider-container">
+                            <input type="range"
+                                   id="pyramid-hide-percent"
+                                   min="30"
+                                   max="70"
+                                   value="50"
+                                   aria-valuemin="30"
+                                   aria-valuemax="70"
+                                   aria-valuenow="50"
+                                   aria-valuetext="50 procent">
+                            <span id="pyramid-hide-percent-display" aria-live="polite">50%</span>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- Scherm 2c: Instellingen Sudoku -->
-    <div id="settings-screen-sudoku" class="screen">
-        <h1>Sudoku</h1>
-        <div class="settings-container">
-            <div class="setting-group">
-                <label>Moeilijkheidsgraad:</label>
-                <div class="difficulty-buttons">
-                    <button class="difficulty-btn" data-difficulty="makkelijk" data-game="sudoku" onclick="selectDifficulty('makkelijk', 'sudoku')">
-                        <span class="diff-icon">⭐</span>
-                        <span class="diff-label">Makkelijk</span>
-                    </button>
-                    <button class="difficulty-btn selected" data-difficulty="normaal" data-game="sudoku" onclick="selectDifficulty('normaal', 'sudoku')">
-                        <span class="diff-icon">⭐⭐</span>
-                        <span class="diff-label">Normaal</span>
-                    </button>
-                    <button class="difficulty-btn" data-difficulty="moeilijk" data-game="sudoku" onclick="selectDifficulty('moeilijk', 'sudoku')">
-                        <span class="diff-icon">⭐⭐⭐</span>
-                        <span class="diff-label">Moeilijk</span>
-                    </button>
+                <div class="button-row">
+                    <button class="back-btn" onclick="goToSelection()" aria-label="Terug naar spelkeuze">← Terug</button>
+                    <button class="start-btn" onclick="startPyramidGame()" aria-label="Start Rekenpiramide spel">Start!</button>
                 </div>
             </div>
+        </div>
 
-            <div class="settings-advanced">
+        <!-- Scherm 2c: Instellingen Sudoku -->
+        <div id="settings-screen-sudoku" class="screen" role="region" aria-label="Sudoku instellingen">
+            <h1>Sudoku</h1>
+            <div class="settings-container">
                 <div class="setting-group">
-                    <label>Grid grootte:</label>
-                    <div class="grid-size-buttons">
-                        <button class="grid-size-btn selected" data-size="4" onclick="selectSudokuSize(4)">
-                            <span class="size-number">4×4</span>
-                            <span class="size-desc">Getallen 1-4</span>
+                    <label id="sudoku-difficulty-label">Moeilijkheidsgraad:</label>
+                    <div class="difficulty-buttons" role="group" aria-labelledby="sudoku-difficulty-label">
+                        <button class="difficulty-btn"
+                                data-difficulty="makkelijk"
+                                data-game="sudoku"
+                                onclick="selectDifficulty('makkelijk', 'sudoku')"
+                                aria-label="Makkelijk - 1 ster">
+                            <span class="diff-icon" aria-hidden="true">⭐</span>
+                            <span class="diff-label">Makkelijk</span>
                         </button>
-                        <button class="grid-size-btn" data-size="6" onclick="selectSudokuSize(6)">
-                            <span class="size-number">6×6</span>
-                            <span class="size-desc">Getallen 1-6</span>
+                        <button class="difficulty-btn selected"
+                                data-difficulty="normaal"
+                                data-game="sudoku"
+                                onclick="selectDifficulty('normaal', 'sudoku')"
+                                aria-label="Normaal - 2 sterren"
+                                aria-pressed="true">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐</span>
+                            <span class="diff-label">Normaal</span>
+                        </button>
+                        <button class="difficulty-btn"
+                                data-difficulty="moeilijk"
+                                data-game="sudoku"
+                                onclick="selectDifficulty('moeilijk', 'sudoku')"
+                                aria-label="Moeilijk - 3 sterren">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐⭐</span>
+                            <span class="diff-label">Moeilijk</span>
                         </button>
                     </div>
                 </div>
-            </div>
 
-            <div class="button-row">
-                <button class="back-btn" onclick="goToSelection()">← Terug</button>
-                <button class="start-btn" onclick="startSudokuGame()">Start!</button>
-            </div>
-        </div>
-    </div>
+                <div class="settings-advanced">
+                    <div class="setting-group">
+                        <label id="sudoku-size-label">Grid grootte:</label>
+                        <div class="grid-size-buttons" role="group" aria-labelledby="sudoku-size-label">
+                            <button class="grid-size-btn selected"
+                                    data-size="4"
+                                    onclick="selectSudokuSize(4)"
+                                    aria-label="4 bij 4 grid met getallen 1 tot 4"
+                                    aria-pressed="true">
+                                <span class="size-number">4×4</span>
+                                <span class="size-desc">Getallen 1-4</span>
+                            </button>
+                            <button class="grid-size-btn"
+                                    data-size="6"
+                                    onclick="selectSudokuSize(6)"
+                                    aria-label="6 bij 6 grid met getallen 1 tot 6"
+                                    aria-pressed="false">
+                                <span class="size-number">6×6</span>
+                                <span class="size-desc">Getallen 1-6</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- Scherm 2d: Instellingen Binary -->
-    <div id="settings-screen-binary" class="screen">
-        <h1>Binary</h1>
-        <div class="settings-container">
-            <div class="setting-group">
-                <label>Moeilijkheidsgraad:</label>
-                <div class="difficulty-buttons">
-                    <button class="difficulty-btn" data-difficulty="makkelijk" data-game="binary" onclick="selectDifficulty('makkelijk', 'binary')">
-                        <span class="diff-icon">⭐</span>
-                        <span class="diff-label">Makkelijk</span>
-                    </button>
-                    <button class="difficulty-btn selected" data-difficulty="normaal" data-game="binary" onclick="selectDifficulty('normaal', 'binary')">
-                        <span class="diff-icon">⭐⭐</span>
-                        <span class="diff-label">Normaal</span>
-                    </button>
-                    <button class="difficulty-btn" data-difficulty="moeilijk" data-game="binary" onclick="selectDifficulty('moeilijk', 'binary')">
-                        <span class="diff-icon">⭐⭐⭐</span>
-                        <span class="diff-label">Moeilijk</span>
-                    </button>
+                <div class="button-row">
+                    <button class="back-btn" onclick="goToSelection()" aria-label="Terug naar spelkeuze">← Terug</button>
+                    <button class="start-btn" onclick="startSudokuGame()" aria-label="Start Sudoku spel">Start!</button>
                 </div>
             </div>
+        </div>
 
-            <div class="settings-advanced">
+        <!-- Scherm 2d: Instellingen Binary -->
+        <div id="settings-screen-binary" class="screen" role="region" aria-label="Binary instellingen">
+            <h1>Binary</h1>
+            <div class="settings-container">
                 <div class="setting-group">
-                    <label>Grid grootte:</label>
-                    <div class="grid-size-buttons">
-                        <button class="grid-size-btn selected" data-size="4" onclick="selectBinarySize(4)">
-                            <span class="size-number">4×4</span>
-                            <span class="size-desc">Klein</span>
+                    <label id="binary-difficulty-label">Moeilijkheidsgraad:</label>
+                    <div class="difficulty-buttons" role="group" aria-labelledby="binary-difficulty-label">
+                        <button class="difficulty-btn"
+                                data-difficulty="makkelijk"
+                                data-game="binary"
+                                onclick="selectDifficulty('makkelijk', 'binary')"
+                                aria-label="Makkelijk - 1 ster">
+                            <span class="diff-icon" aria-hidden="true">⭐</span>
+                            <span class="diff-label">Makkelijk</span>
                         </button>
-                        <button class="grid-size-btn" data-size="6" onclick="selectBinarySize(6)">
-                            <span class="size-number">6×6</span>
-                            <span class="size-desc">Middel</span>
+                        <button class="difficulty-btn selected"
+                                data-difficulty="normaal"
+                                data-game="binary"
+                                onclick="selectDifficulty('normaal', 'binary')"
+                                aria-label="Normaal - 2 sterren"
+                                aria-pressed="true">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐</span>
+                            <span class="diff-label">Normaal</span>
                         </button>
-                        <button class="grid-size-btn" data-size="8" onclick="selectBinarySize(8)">
-                            <span class="size-number">8×8</span>
-                            <span class="size-desc">Groot</span>
+                        <button class="difficulty-btn"
+                                data-difficulty="moeilijk"
+                                data-game="binary"
+                                onclick="selectDifficulty('moeilijk', 'binary')"
+                                aria-label="Moeilijk - 3 sterren">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐⭐</span>
+                            <span class="diff-label">Moeilijk</span>
                         </button>
                     </div>
                 </div>
+
+                <div class="settings-advanced">
+                    <div class="setting-group">
+                        <label id="binary-size-label">Grid grootte:</label>
+                        <div class="grid-size-buttons" role="group" aria-labelledby="binary-size-label">
+                            <button class="grid-size-btn selected"
+                                    data-size="4"
+                                    onclick="selectBinarySize(4)"
+                                    aria-label="4 bij 4 grid - Klein"
+                                    aria-pressed="true">
+                                <span class="size-number">4×4</span>
+                                <span class="size-desc">Klein</span>
+                            </button>
+                            <button class="grid-size-btn"
+                                    data-size="6"
+                                    onclick="selectBinarySize(6)"
+                                    aria-label="6 bij 6 grid - Middel"
+                                    aria-pressed="false">
+                                <span class="size-number">6×6</span>
+                                <span class="size-desc">Middel</span>
+                            </button>
+                            <button class="grid-size-btn"
+                                    data-size="8"
+                                    onclick="selectBinarySize(8)"
+                                    aria-label="8 bij 8 grid - Groot"
+                                    aria-pressed="false">
+                                <span class="size-number">8×8</span>
+                                <span class="size-desc">Groot</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button class="back-btn" onclick="goToSelection()" aria-label="Terug naar spelkeuze">← Terug</button>
+                    <button class="start-btn" onclick="startBinaryGame()" aria-label="Start Binary spel">Start!</button>
+                </div>
             </div>
+        </div>
 
-            <div class="button-row">
-                <button class="back-btn" onclick="goToSelection()">← Terug</button>
-                <button class="start-btn" onclick="startBinaryGame()">Start!</button>
+        <!-- Scherm 2e: Instellingen Wisselgeld -->
+        <div id="settings-screen-change" class="screen" role="region" aria-label="Wisselgeld instellingen">
+            <h1>Wisselgeld</h1>
+            <div class="settings-container">
+                <div class="setting-group">
+                    <label id="change-difficulty-label">Moeilijkheidsgraad:</label>
+                    <div class="difficulty-buttons" role="group" aria-labelledby="change-difficulty-label">
+                        <button class="difficulty-btn"
+                                data-difficulty="makkelijk"
+                                data-game="change"
+                                onclick="selectChangeDifficulty('makkelijk')"
+                                aria-label="Makkelijk - 1 ster">
+                            <span class="diff-icon" aria-hidden="true">⭐</span>
+                            <span class="diff-label">Makkelijk</span>
+                        </button>
+                        <button class="difficulty-btn selected"
+                                data-difficulty="normaal"
+                                data-game="change"
+                                onclick="selectChangeDifficulty('normaal')"
+                                aria-label="Normaal - 2 sterren"
+                                aria-pressed="true">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐</span>
+                            <span class="diff-label">Normaal</span>
+                        </button>
+                        <button class="difficulty-btn"
+                                data-difficulty="moeilijk"
+                                data-game="change"
+                                onclick="selectChangeDifficulty('moeilijk')"
+                                aria-label="Moeilijk - 3 sterren">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐⭐</span>
+                            <span class="diff-label">Moeilijk</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-info">
+                    <p>🪙 <strong>Makkelijk:</strong> Bedragen tot €1, alleen grote munten</p>
+                    <p>🪙 <strong>Normaal:</strong> Bedragen tot €2,50</p>
+                    <p>🪙 <strong>Moeilijk:</strong> Bedragen tot €4, alle munten</p>
+                </div>
+
+                <div class="button-row">
+                    <button class="back-btn" onclick="goToSelection()" aria-label="Terug naar spelkeuze">← Terug</button>
+                    <button class="start-btn" onclick="startChangeGame()" aria-label="Start Wisselgeld spel">Start!</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Scherm 3a: Rekenslang spel -->
-    <div id="game-screen-snake" class="screen">
-        <div class="game-header">
-            <button class="back-btn small" onclick="goToSettings('snake')">← Terug</button>
-            <div class="timer"><span id="snake-timer-display">00:00</span></div>
-        </div>
-        <div class="snake-wrapper">
-            <div class="snake-grid" id="snake-grid"></div>
-        </div>
-    </div>
+        <!-- Scherm 2f: Instellingen Klokkijken -->
+        <div id="settings-screen-clock" class="screen" role="region" aria-label="Klokkijken instellingen">
+            <h1>Klokkijken</h1>
+            <div class="settings-container">
+                <div class="setting-group">
+                    <label id="clock-difficulty-label">Moeilijkheidsgraad:</label>
+                    <div class="difficulty-buttons" role="group" aria-labelledby="clock-difficulty-label">
+                        <button class="difficulty-btn"
+                                data-difficulty="makkelijk"
+                                data-game="clock"
+                                onclick="selectClockDifficulty('makkelijk')"
+                                aria-label="Makkelijk - 1 ster">
+                            <span class="diff-icon" aria-hidden="true">⭐</span>
+                            <span class="diff-label">Makkelijk</span>
+                        </button>
+                        <button class="difficulty-btn selected"
+                                data-difficulty="normaal"
+                                data-game="clock"
+                                onclick="selectClockDifficulty('normaal')"
+                                aria-label="Normaal - 2 sterren"
+                                aria-pressed="true">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐</span>
+                            <span class="diff-label">Normaal</span>
+                        </button>
+                        <button class="difficulty-btn"
+                                data-difficulty="moeilijk"
+                                data-game="clock"
+                                onclick="selectClockDifficulty('moeilijk')"
+                                aria-label="Moeilijk - 3 sterren">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐⭐</span>
+                            <span class="diff-label">Moeilijk</span>
+                        </button>
+                    </div>
+                </div>
 
-    <!-- Scherm 3b: Rekenpiramide spel -->
-    <div id="game-screen-pyramid" class="screen">
-        <div class="game-header">
-            <button class="back-btn small" onclick="goToSettings('pyramid')">← Terug</button>
-            <div class="timer"><span id="pyramid-timer-display">00:00</span></div>
-        </div>
-        <div class="pyramid-wrapper">
-            <div class="pyramid-container" id="pyramid-container"></div>
-        </div>
-    </div>
+                <div class="settings-info">
+                    <p>🕐 <strong>Makkelijk:</strong> Hele en halve uren, kies uit 3 opties</p>
+                    <p>🕐 <strong>Normaal:</strong> Ook kwartieren, kies uit 3 opties</p>
+                    <p>🕐 <strong>Moeilijk:</strong> Alle tijden per 5 min, sleep de wijzers</p>
+                </div>
 
-    <!-- Scherm 3c: Sudoku spel -->
-    <div id="game-screen-sudoku" class="screen">
-        <div class="game-header">
-            <button class="back-btn small" onclick="goToSettings('sudoku')">← Terug</button>
-            <div class="timer"><span id="sudoku-timer-display">00:00</span></div>
+                <div class="button-row">
+                    <button class="back-btn" onclick="goToSelection()" aria-label="Terug naar spelkeuze">← Terug</button>
+                    <button class="start-btn" onclick="startClockGame()" aria-label="Start Klokkijken spel">Start!</button>
+                </div>
+            </div>
         </div>
-        <div class="sudoku-wrapper">
-            <div class="sudoku-grid" id="sudoku-grid"></div>
-        </div>
-    </div>
 
-    <!-- Scherm 3d: Binary spel -->
-    <div id="game-screen-binary" class="screen">
-        <div class="game-header">
-            <button class="back-btn small" onclick="goToSettings('binary')">← Terug</button>
-            <div class="timer"><span id="binary-timer-display">00:00</span></div>
+        <!-- Scherm 3a: Rekenslang spel -->
+        <div id="game-screen-snake" class="screen" role="region" aria-label="Rekenslang spel">
+            <div class="game-header">
+                <button class="back-btn small" onclick="goToSettings('snake')" aria-label="Terug naar instellingen">← Terug</button>
+                <div class="timer" role="timer" aria-label="Verstreken tijd">
+                    <span id="snake-timer-display" aria-live="off">00:00</span>
+                </div>
+                <button class="mute-btn small" onclick="toggleMute()" aria-label="Geluid uitzetten">🔊</button>
+            </div>
+            <div class="snake-wrapper">
+                <div class="snake-grid" id="snake-grid" role="grid" aria-label="Rekenslang puzzel"></div>
+            </div>
         </div>
-        <div class="binary-wrapper">
-            <div class="binary-grid" id="binary-grid"></div>
+
+        <!-- Scherm 3b: Rekenpiramide spel -->
+        <div id="game-screen-pyramid" class="screen" role="region" aria-label="Rekenpiramide spel">
+            <div class="game-header">
+                <button class="back-btn small" onclick="goToSettings('pyramid')" aria-label="Terug naar instellingen">← Terug</button>
+                <div class="timer" role="timer" aria-label="Verstreken tijd">
+                    <span id="pyramid-timer-display" aria-live="off">00:00</span>
+                </div>
+                <button class="mute-btn small" onclick="toggleMute()" aria-label="Geluid uitzetten">🔊</button>
+            </div>
+            <div class="pyramid-wrapper">
+                <div class="pyramid-container" id="pyramid-container" role="grid" aria-label="Rekenpiramide puzzel"></div>
+            </div>
         </div>
-    </div>
+
+        <!-- Scherm 3c: Sudoku spel -->
+        <div id="game-screen-sudoku" class="screen" role="region" aria-label="Sudoku spel">
+            <div class="game-header">
+                <button class="back-btn small" onclick="goToSettings('sudoku')" aria-label="Terug naar instellingen">← Terug</button>
+                <div class="timer" role="timer" aria-label="Verstreken tijd">
+                    <span id="sudoku-timer-display" aria-live="off">00:00</span>
+                </div>
+                <button class="mute-btn small" onclick="toggleMute()" aria-label="Geluid uitzetten">🔊</button>
+            </div>
+            <div class="sudoku-wrapper">
+                <div class="sudoku-grid" id="sudoku-grid" role="grid" aria-label="Sudoku puzzel"></div>
+            </div>
+        </div>
+
+        <!-- Scherm 3d: Binary spel -->
+        <div id="game-screen-binary" class="screen" role="region" aria-label="Binary spel">
+            <div class="game-header">
+                <button class="back-btn small" onclick="goToSettings('binary')" aria-label="Terug naar instellingen">← Terug</button>
+                <div class="timer" role="timer" aria-label="Verstreken tijd">
+                    <span id="binary-timer-display" aria-live="off">00:00</span>
+                </div>
+                <button class="mute-btn small" onclick="toggleMute()" aria-label="Geluid uitzetten">🔊</button>
+            </div>
+            <div class="binary-wrapper">
+                <div class="binary-grid" id="binary-grid" role="grid" aria-label="Binary puzzel"></div>
+            </div>
+        </div>
+
+        <!-- Scherm 3e: Wisselgeld spel -->
+        <div id="game-screen-change" class="screen" role="region" aria-label="Wisselgeld spel">
+            <div class="game-header">
+                <button class="back-btn small" onclick="goToSettings('change')" aria-label="Terug naar instellingen">← Terug</button>
+                <div class="timer" role="timer" aria-label="Verstreken tijd">
+                    <span id="change-timer-display" aria-live="off">00:00</span>
+                </div>
+                <span id="change-round-display" class="round-display">Ronde 1/5</span>
+                <button class="mute-btn small" onclick="toggleMute()" aria-label="Geluid uitzetten">🔊</button>
+            </div>
+            <div class="change-wrapper">
+                <div class="change-game-container" id="change-game-container"></div>
+            </div>
+        </div>
+
+        <!-- Scherm 3f: Klokkijken spel -->
+        <div id="game-screen-clock" class="screen" role="region" aria-label="Klokkijken spel">
+            <div class="game-header">
+                <button class="back-btn small" onclick="goToSettings('clock')" aria-label="Terug naar instellingen">← Terug</button>
+                <div class="timer" role="timer" aria-label="Verstreken tijd">
+                    <span id="clock-timer-display" aria-live="off">00:00</span>
+                </div>
+                <span id="clock-round-display" class="round-display">Ronde 1/5</span>
+                <button class="mute-btn small" onclick="toggleMute()" aria-label="Geluid uitzetten">🔊</button>
+            </div>
+            <div class="clock-wrapper">
+                <div class="clock-game-container" id="clock-game-container"></div>
+            </div>
+        </div>
+
+    </main>
 
     <!-- Cijferinvoer popup -->
-    <div id="number-input-popup" class="popup hidden">
+    <div id="number-input-popup" class="popup hidden" role="dialog" aria-modal="true" aria-labelledby="number-input-title">
         <div class="popup-content">
-            <div class="input-display" id="input-display">_</div>
-            <div class="number-pad" id="number-pad">
-                <button class="num-btn" onclick="inputNumber(1)">1</button>
-                <button class="num-btn" onclick="inputNumber(2)">2</button>
-                <button class="num-btn" onclick="inputNumber(3)">3</button>
-                <button class="num-btn" onclick="inputNumber(4)">4</button>
-                <button class="num-btn" onclick="inputNumber(5)">5</button>
-                <button class="num-btn" onclick="inputNumber(6)">6</button>
-                <button class="num-btn" onclick="inputNumber(7)">7</button>
-                <button class="num-btn" onclick="inputNumber(8)">8</button>
-                <button class="num-btn" onclick="inputNumber(9)">9</button>
-                <button class="num-btn clear-btn" onclick="clearInput()">←</button>
-                <button class="num-btn" onclick="inputNumber(0)">0</button>
-                <button class="num-btn confirm-btn" onclick="confirmInput()">OK</button>
+            <h2 id="number-input-title" class="visually-hidden">Voer een getal in</h2>
+            <div class="input-display" id="input-display" aria-live="polite" aria-atomic="true">_</div>
+            <div class="number-pad" id="number-pad" role="group" aria-label="Cijfertoetsen">
+                <button class="num-btn" onclick="inputNumber(1)" aria-label="1">1</button>
+                <button class="num-btn" onclick="inputNumber(2)" aria-label="2">2</button>
+                <button class="num-btn" onclick="inputNumber(3)" aria-label="3">3</button>
+                <button class="num-btn" onclick="inputNumber(4)" aria-label="4">4</button>
+                <button class="num-btn" onclick="inputNumber(5)" aria-label="5">5</button>
+                <button class="num-btn" onclick="inputNumber(6)" aria-label="6">6</button>
+                <button class="num-btn" onclick="inputNumber(7)" aria-label="7">7</button>
+                <button class="num-btn" onclick="inputNumber(8)" aria-label="8">8</button>
+                <button class="num-btn" onclick="inputNumber(9)" aria-label="9">9</button>
+                <button class="num-btn clear-btn" onclick="clearInput()" aria-label="Wis laatste cijfer">←</button>
+                <button class="num-btn" onclick="inputNumber(0)" aria-label="0">0</button>
+                <button class="num-btn confirm-btn" onclick="confirmInput()" aria-label="Bevestig invoer">OK</button>
             </div>
-            <button class="close-popup-btn" onclick="closePopup()">Sluiten</button>
+            <button class="close-popup-btn" onclick="closePopup()" aria-label="Sluit invoerscherm">Sluiten</button>
         </div>
     </div>
 
     <!-- Sudoku nummer selectie popup -->
-    <div id="sudoku-input-popup" class="popup hidden">
+    <div id="sudoku-input-popup" class="popup hidden" role="dialog" aria-modal="true" aria-labelledby="sudoku-input-title">
         <div class="popup-content sudoku-popup">
-            <div class="sudoku-number-grid" id="sudoku-number-grid">
+            <h2 id="sudoku-input-title" class="visually-hidden">Kies een getal</h2>
+            <div class="sudoku-number-grid" id="sudoku-number-grid" role="group" aria-label="Kies een getal">
                 <!-- Wordt dynamisch gevuld -->
             </div>
-            <button class="close-popup-btn" onclick="closeSudokuPopup()">Sluiten</button>
+            <button class="close-popup-btn" onclick="closeSudokuPopup()" aria-label="Sluit selectiescherm">Sluiten</button>
         </div>
     </div>
 
     <!-- Binary nummer selectie popup -->
-    <div id="binary-input-popup" class="popup hidden">
+    <div id="binary-input-popup" class="popup hidden" role="dialog" aria-modal="true" aria-labelledby="binary-input-title">
         <div class="popup-content binary-popup">
-            <div class="binary-number-grid">
-                <button class="binary-num-btn zero" onclick="selectBinaryNumber(0)">0</button>
-                <button class="binary-num-btn one" onclick="selectBinaryNumber(1)">1</button>
+            <h2 id="binary-input-title" class="visually-hidden">Kies 0 of 1</h2>
+            <div class="binary-number-grid" role="group" aria-label="Kies 0 of 1">
+                <button class="binary-num-btn zero" onclick="selectBinaryNumber(0)" aria-label="Kies 0">0</button>
+                <button class="binary-num-btn one" onclick="selectBinaryNumber(1)" aria-label="Kies 1">1</button>
             </div>
-            <button class="close-popup-btn" onclick="closeBinaryPopup()">Sluiten</button>
+            <button class="close-popup-btn" onclick="closeBinaryPopup()" aria-label="Sluit selectiescherm">Sluiten</button>
         </div>
     </div>
 
-    <!-- Vuurwerk canvas -->
-    <canvas id="fireworks-canvas"></canvas>
+    <!-- Live region voor aankondigingen -->
+    <div id="announcer" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
 
+    <!-- Vuurwerk canvas -->
+    <canvas id="fireworks-canvas" aria-hidden="true"></canvas>
+
+    <!-- Scripts in juiste volgorde laden -->
+    <script src="config.js"></script>
+    <script src="timer.js"></script>
     <script src="sounds.js"></script>
+    <script src="victory.js"></script>
     <script src="fireworks.js"></script>
     <script src="game.js"></script>
     <script src="pyramid.js"></script>
     <script src="sudoku.js"></script>
     <script src="binary.js"></script>
+    <script src="change.js"></script>
+    <script src="clock.js"></script>
+    <script src="keyboard.js"></script>
 </body>
 </html>
