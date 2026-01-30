@@ -101,6 +101,10 @@ function selectGame(game) {
         currentGame = 'clock';
         GameState.currentGame = 'clock';
         showScreen('settings-screen-clock');
+    } else if (game === 'tamagotchi') {
+        currentGame = 'tamagotchi';
+        GameState.currentGame = 'tamagotchi';
+        showScreen('settings-screen-tamagotchi');
     }
 }
 
@@ -116,6 +120,8 @@ function goToSelection() {
         if (typeof stopChangeTimer === 'function') stopChangeTimer();
         if (typeof stopClockTimer === 'function') stopClockTimer();
     }
+    // Stop tamagotchi game loop
+    if (typeof stopTamagotchiTimer === 'function') stopTamagotchiTimer();
     showScreen('game-selection');
 }
 
@@ -142,6 +148,9 @@ function goToSettings(game) {
     } else if (game === 'clock') {
         if (typeof stopClockTimer === 'function') stopClockTimer();
         showScreen('settings-screen-clock');
+    } else if (game === 'tamagotchi') {
+        if (typeof stopTamagotchiTimer === 'function') stopTamagotchiTimer();
+        showScreen('settings-screen-tamagotchi');
     }
 }
 

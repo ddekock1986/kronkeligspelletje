@@ -311,6 +311,56 @@
                     <p>Hoe laat is het?</p>
                 </div>
 
+                <!-- Math-agotchi kaart -->
+                <div class="game-card"
+                     role="listitem"
+                     tabindex="0"
+                     onclick="selectGame('tamagotchi')"
+                     onkeydown="handleCardKeydown(event, 'tamagotchi')"
+                     aria-label="Math-agotchi - Verzorg je huisdier met rekenen">
+                    <div class="game-icon" aria-hidden="true">
+                        <svg viewBox="0 0 200 160" class="tamagotchi-svg" role="img" aria-label="Math-agotchi icoon">
+                            <defs>
+                                <linearGradient id="petGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#FFB6C1"/>
+                                    <stop offset="100%" style="stop-color:#FF69B4"/>
+                                </linearGradient>
+                                <linearGradient id="eggGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#E1F5FE"/>
+                                    <stop offset="100%" style="stop-color:#81D4FA"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- Ei/behuizing -->
+                            <ellipse cx="100" cy="85" rx="65" ry="55" fill="url(#eggGradient)" stroke="#4FC3F7" stroke-width="4"/>
+                            <ellipse cx="100" cy="85" rx="55" ry="45" fill="white"/>
+                            <!-- Huisdier (blob/slime karakter) -->
+                            <ellipse cx="100" cy="95" rx="35" ry="30" fill="url(#petGradient)"/>
+                            <ellipse cx="100" cy="100" rx="30" ry="22" fill="#FF69B4" opacity="0.5"/>
+                            <!-- Ogen -->
+                            <ellipse cx="88" cy="88" rx="8" ry="10" fill="white"/>
+                            <ellipse cx="112" cy="88" rx="8" ry="10" fill="white"/>
+                            <circle cx="90" cy="90" r="4" fill="#333"/>
+                            <circle cx="114" cy="90" r="4" fill="#333"/>
+                            <circle cx="91" cy="88" r="1.5" fill="white"/>
+                            <circle cx="115" cy="88" r="1.5" fill="white"/>
+                            <!-- Blije mond -->
+                            <path d="M 90 105 Q 100 115 110 105" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <!-- Wangetjes -->
+                            <ellipse cx="75" cy="100" rx="6" ry="4" fill="#FF9999" opacity="0.6"/>
+                            <ellipse cx="125" cy="100" rx="6" ry="4" fill="#FF9999" opacity="0.6"/>
+                            <!-- Status hartjes -->
+                            <path d="M 35 35 C 35 25 50 25 50 35 C 50 45 35 55 35 55 C 35 55 20 45 20 35 C 20 25 35 25 35 35" fill="#FF6B6B" transform="scale(0.6) translate(25, 15)"/>
+                            <path d="M 35 35 C 35 25 50 25 50 35 C 50 45 35 55 35 55 C 35 55 20 45 20 35 C 20 25 35 25 35 35" fill="#FFD700" transform="scale(0.6) translate(255, 15)"/>
+                            <!-- Sterretjes decoratie -->
+                            <text x="30" y="145" font-size="20" fill="#FFD700">+</text>
+                            <text x="160" y="145" font-size="20" fill="#FFD700">-</text>
+                            <text x="30" y="50" font-size="16" fill="#FF69B4">x</text>
+                        </svg>
+                    </div>
+                    <h2>Math-agotchi</h2>
+                    <p>Verzorg je huisdier!</p>
+                </div>
+
             </div>
         </div>
 
@@ -828,6 +878,127 @@
             </div>
         </div>
 
+        <!-- Scherm 2g: Instellingen Math-agotchi -->
+        <div id="settings-screen-tamagotchi" class="screen" role="region" aria-label="Math-agotchi instellingen">
+            <h1>Math-agotchi</h1>
+            <div class="settings-container">
+                <div class="setting-group">
+                    <label id="tamagotchi-difficulty-label">Moeilijkheidsgraad tafels:</label>
+                    <div class="difficulty-buttons" role="group" aria-labelledby="tamagotchi-difficulty-label">
+                        <button class="difficulty-btn selected"
+                                data-difficulty="makkelijk"
+                                data-game="tamagotchi"
+                                onclick="selectTamagotchiDifficulty('makkelijk')"
+                                aria-label="Makkelijk - 1 ster"
+                                aria-pressed="true">
+                            <span class="diff-icon" aria-hidden="true">⭐</span>
+                            <span class="diff-label">Makkelijk</span>
+                        </button>
+                        <button class="difficulty-btn"
+                                data-difficulty="normaal"
+                                data-game="tamagotchi"
+                                onclick="selectTamagotchiDifficulty('normaal')"
+                                aria-label="Normaal - 2 sterren">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐</span>
+                            <span class="diff-label">Normaal</span>
+                        </button>
+                        <button class="difficulty-btn"
+                                data-difficulty="moeilijk"
+                                data-game="tamagotchi"
+                                onclick="selectTamagotchiDifficulty('moeilijk')"
+                                aria-label="Moeilijk - 3 sterren">
+                            <span class="diff-icon" aria-hidden="true">⭐⭐⭐</span>
+                            <span class="diff-label">Moeilijk</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-info tamagotchi-info">
+                    <p>🐣 <strong>Makkelijk:</strong> Tafels van 1, 2 en 10</p>
+                    <p>🐥 <strong>Normaal:</strong> Tafels van 1 t/m 5 en 10</p>
+                    <p>🐔 <strong>Moeilijk:</strong> Alle tafels van 1 t/m 10</p>
+                </div>
+
+                <div class="tamagotchi-save-info">
+                    <p id="tamagotchi-save-status">Geen opgeslagen huisdier gevonden</p>
+                </div>
+
+                <div class="button-row">
+                    <button class="back-btn" onclick="goToSelection()" aria-label="Terug naar spelkeuze">← Terug</button>
+                    <button class="start-btn" onclick="startTamagotchiGame()" aria-label="Start Math-agotchi spel">Start!</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scherm 3g: Math-agotchi spel -->
+        <div id="game-screen-tamagotchi" class="screen" role="region" aria-label="Math-agotchi spel">
+            <div class="game-header tamagotchi-header">
+                <button class="back-btn small" onclick="goToSettings('tamagotchi')" aria-label="Terug naar instellingen">← Terug</button>
+                <div class="tamagotchi-streak" id="tamagotchi-streak" aria-label="Huidige reeks correcte antwoorden">
+                    <span class="streak-icon">🔥</span>
+                    <span class="streak-count" id="streak-count">0</span>
+                </div>
+                <button class="mute-btn small" onclick="toggleMute()" aria-label="Geluid uitzetten">🔊</button>
+            </div>
+
+            <div class="tamagotchi-wrapper">
+                <!-- Status bars -->
+                <div class="tamagotchi-status-bars">
+                    <div class="status-bar-container">
+                        <span class="status-icon" aria-hidden="true">🍎</span>
+                        <div class="status-bar">
+                            <div class="status-fill hunger-fill" id="hunger-bar" style="width: 100%"></div>
+                        </div>
+                        <span class="status-label">Honger</span>
+                    </div>
+                    <div class="status-bar-container">
+                        <span class="status-icon" aria-hidden="true">😊</span>
+                        <div class="status-bar">
+                            <div class="status-fill happiness-fill" id="happiness-bar" style="width: 100%"></div>
+                        </div>
+                        <span class="status-label">Blijheid</span>
+                    </div>
+                    <div class="status-bar-container">
+                        <span class="status-icon" aria-hidden="true">⚡</span>
+                        <div class="status-bar">
+                            <div class="status-fill energy-fill" id="energy-bar" style="width: 100%"></div>
+                        </div>
+                        <span class="status-label">Energie</span>
+                    </div>
+                </div>
+
+                <!-- Pet display area -->
+                <div class="tamagotchi-pet-area" id="tamagotchi-pet-area">
+                    <div class="pet-container" id="pet-container">
+                        <!-- Pet wordt hier gerenderd via JavaScript -->
+                    </div>
+                    <div class="pet-mood" id="pet-mood" aria-live="polite"></div>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="tamagotchi-actions">
+                    <button class="tamagotchi-action-btn feed-btn" onclick="openTamagotchiShop('feed')" aria-label="Voeden">
+                        <span class="action-icon">🍎</span>
+                        <span class="action-label">Eten</span>
+                    </button>
+                    <button class="tamagotchi-action-btn play-btn" onclick="openTamagotchiShop('play')" aria-label="Spelen">
+                        <span class="action-icon">🎾</span>
+                        <span class="action-label">Spelen</span>
+                    </button>
+                    <button class="tamagotchi-action-btn sleep-btn" onclick="tamagotchiSleep()" aria-label="Slapen">
+                        <span class="action-icon">💤</span>
+                        <span class="action-label">Slapen</span>
+                    </button>
+                </div>
+
+                <!-- Level/progress indicator -->
+                <div class="tamagotchi-progress">
+                    <span class="progress-label">Ontgrendelde tafels:</span>
+                    <span class="progress-tables" id="unlocked-tables">1, 2, 10</span>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- Cijferinvoer popup -->
@@ -876,6 +1047,42 @@
         </div>
     </div>
 
+    <!-- Math-agotchi shop/actie popup -->
+    <div id="tamagotchi-shop-popup" class="popup hidden" role="dialog" aria-modal="true" aria-labelledby="tamagotchi-shop-title">
+        <div class="popup-content tamagotchi-shop-popup">
+            <h2 id="tamagotchi-shop-title" class="tamagotchi-shop-header">
+                <span class="shop-action-icon" id="shop-action-icon">🍎</span>
+                <span id="shop-action-text">Voer je huisdier</span>
+            </h2>
+
+            <!-- De rekensom -->
+            <div class="tamagotchi-math-question">
+                <span class="math-problem" id="math-problem">3 x 4 = ?</span>
+            </div>
+
+            <!-- Invoer display -->
+            <div class="tamagotchi-input-display" id="tamagotchi-input-display" aria-live="polite" aria-atomic="true">_</div>
+
+            <!-- Nummerpad -->
+            <div class="number-pad tamagotchi-numpad" id="tamagotchi-number-pad" role="group" aria-label="Cijfertoetsen">
+                <button class="num-btn" onclick="tamagotchiInputNumber(1)" aria-label="1">1</button>
+                <button class="num-btn" onclick="tamagotchiInputNumber(2)" aria-label="2">2</button>
+                <button class="num-btn" onclick="tamagotchiInputNumber(3)" aria-label="3">3</button>
+                <button class="num-btn" onclick="tamagotchiInputNumber(4)" aria-label="4">4</button>
+                <button class="num-btn" onclick="tamagotchiInputNumber(5)" aria-label="5">5</button>
+                <button class="num-btn" onclick="tamagotchiInputNumber(6)" aria-label="6">6</button>
+                <button class="num-btn" onclick="tamagotchiInputNumber(7)" aria-label="7">7</button>
+                <button class="num-btn" onclick="tamagotchiInputNumber(8)" aria-label="8">8</button>
+                <button class="num-btn" onclick="tamagotchiInputNumber(9)" aria-label="9">9</button>
+                <button class="num-btn clear-btn" onclick="tamagotchiClearInput()" aria-label="Wis laatste cijfer">←</button>
+                <button class="num-btn" onclick="tamagotchiInputNumber(0)" aria-label="0">0</button>
+                <button class="num-btn confirm-btn" onclick="tamagotchiConfirmAnswer()" aria-label="Bevestig antwoord">OK</button>
+            </div>
+
+            <button class="close-popup-btn" onclick="closeTamagotchiShop()" aria-label="Sluit winkel">Sluiten</button>
+        </div>
+    </div>
+
     <!-- Live region voor aankondigingen -->
     <div id="announcer" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
 
@@ -894,6 +1101,7 @@
     <script src="binary.js"></script>
     <script src="change.js"></script>
     <script src="clock.js"></script>
+    <script src="tamagotchi.js"></script>
     <script src="keyboard.js"></script>
 </body>
 </html>
