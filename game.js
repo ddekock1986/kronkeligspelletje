@@ -105,6 +105,10 @@ function selectGame(game) {
         currentGame = 'tamagotchi';
         GameState.currentGame = 'tamagotchi';
         showScreen('settings-screen-tamagotchi');
+    } else if (game === 'kippenspel') {
+        currentGame = 'chicken';
+        GameState.currentGame = 'chicken';
+        showScreen('settings-screen-chicken');
     }
 }
 
@@ -122,6 +126,8 @@ function goToSelection() {
     }
     // Stop tamagotchi game loop
     if (typeof stopTamagotchiTimer === 'function') stopTamagotchiTimer();
+    // Stop kippenspel game loop
+    if (typeof stopChickenTimer === 'function') stopChickenTimer();
     showScreen('game-selection');
 }
 
@@ -151,6 +157,9 @@ function goToSettings(game) {
     } else if (game === 'tamagotchi') {
         if (typeof stopTamagotchiTimer === 'function') stopTamagotchiTimer();
         showScreen('settings-screen-tamagotchi');
+    } else if (game === 'chicken') {
+        if (typeof stopChickenTimer === 'function') stopChickenTimer();
+        showScreen('settings-screen-chicken');
     }
 }
 

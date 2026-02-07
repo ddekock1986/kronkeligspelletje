@@ -361,6 +361,52 @@
                     <p>Verzorg je huisdier!</p>
                 </div>
 
+                <!-- Kippenspel kaart -->
+                <div class="game-card"
+                     role="listitem"
+                     tabindex="0"
+                     onclick="selectGame('kippenspel')"
+                     onkeydown="handleCardKeydown(event, 'kippenspel')"
+                     aria-label="Kippenspel - Laat je ei groeien naar een kip">
+                    <div class="game-icon" aria-hidden="true">
+                        <svg viewBox="0 0 200 160" class="chicken-svg" role="img" aria-label="Kippenspel icoon">
+                            <defs>
+                                <linearGradient id="eggShellGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#FFF8E1"/>
+                                    <stop offset="100%" style="stop-color:#FFE0B2"/>
+                                </linearGradient>
+                                <linearGradient id="nestGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#8D6E63"/>
+                                    <stop offset="100%" style="stop-color:#5D4037"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- Nest -->
+                            <ellipse cx="100" cy="120" rx="70" ry="20" fill="url(#nestGradient)"/>
+                            <ellipse cx="100" cy="118" rx="60" ry="15" fill="#A1887F"/>
+                            <!-- Stro strepen -->
+                            <line x1="45" y1="115" x2="75" y2="110" stroke="#D7CCC8" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="80" y1="112" x2="110" y2="108" stroke="#BCAAA4" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="115" y1="110" x2="150" y2="115" stroke="#D7CCC8" stroke-width="2" stroke-linecap="round"/>
+                            <!-- Ei -->
+                            <ellipse cx="100" cy="80" rx="30" ry="40" fill="url(#eggShellGradient)" stroke="#FFB74D" stroke-width="2"/>
+                            <ellipse cx="92" cy="70" rx="8" ry="12" fill="white" opacity="0.4"/>
+                            <!-- Warmtegolven -->
+                            <path d="M 55 50 Q 60 40 65 50" stroke="#FF5722" stroke-width="2" fill="none" opacity="0.6"/>
+                            <path d="M 50 60 Q 55 50 60 60" stroke="#FF7043" stroke-width="2" fill="none" opacity="0.4"/>
+                            <path d="M 135 50 Q 140 40 145 50" stroke="#FF5722" stroke-width="2" fill="none" opacity="0.6"/>
+                            <path d="M 140 60 Q 145 50 150 60" stroke="#FF7043" stroke-width="2" fill="none" opacity="0.4"/>
+                            <!-- Pijl naar kip -->
+                            <text x="30" y="30" font-size="24">&#x1F95A;</text>
+                            <text x="80" y="25" font-size="12" fill="#666">&#x2192;</text>
+                            <text x="100" y="30" font-size="24">&#x1F423;</text>
+                            <text x="140" y="25" font-size="12" fill="#666">&#x2192;</text>
+                            <text x="155" y="30" font-size="24">&#x1F414;</text>
+                        </svg>
+                    </div>
+                    <h2>Kippenspel</h2>
+                    <p>Laat je ei groeien!</p>
+                </div>
+
             </div>
         </div>
 
@@ -930,6 +976,29 @@
             </div>
         </div>
 
+        <!-- Scherm 2h: Instellingen Kippenspel -->
+        <div id="settings-screen-chicken" class="screen" role="region" aria-label="Kippenspel instellingen">
+            <h1>Kippenspel</h1>
+            <div class="settings-container">
+                <div class="settings-info chicken-info">
+                    <p>&#x1F95A; Begin met een ei en houd het warm met keersommen!</p>
+                    <p>&#x1F423; Na 10 sommen komt er een kuikentje uit</p>
+                    <p>&#x1F425; Na 25 sommen groeit het kuikentje</p>
+                    <p>&#x1F414; Na 45 sommen wordt het een kip</p>
+                    <p>&#x1F3C6; Na 70 sommen legt de kip een nieuw ei!</p>
+                </div>
+
+                <div class="chicken-save-info">
+                    <p id="chicken-save-status">Geen opgeslagen spel - begin met een nieuw ei!</p>
+                </div>
+
+                <div class="button-row">
+                    <button class="back-btn" onclick="goToSelection()" aria-label="Terug naar spelkeuze">&#x2190; Terug</button>
+                    <button class="start-btn" onclick="startChickenGame()" aria-label="Start Kippenspel">Start!</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Scherm 3g: Math-agotchi spel -->
         <div id="game-screen-tamagotchi" class="screen" role="region" aria-label="Math-agotchi spel">
             <div class="game-header tamagotchi-header">
@@ -995,6 +1064,38 @@
                 <div class="tamagotchi-progress">
                     <span class="progress-label">Ontgrendelde tafels:</span>
                     <span class="progress-tables" id="unlocked-tables">1, 2, 10</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scherm 3h: Kippenspel -->
+        <div id="game-screen-chicken" class="screen" role="region" aria-label="Kippenspel">
+            <div class="game-header chicken-header">
+                <button class="back-btn small" onclick="goToSettings('chicken')" aria-label="Terug naar instellingen">&#x2190; Terug</button>
+                <div class="chicken-progress" id="chicken-progress">
+                    <span class="chicken-progress-text" id="chicken-progress-text">0 / 10 sommen</span>
+                    <span class="chicken-rounds-text" id="chicken-rounds-text"></span>
+                </div>
+                <button class="mute-btn small" onclick="toggleMute()" aria-label="Geluid uitzetten">&#x1F50A;</button>
+            </div>
+
+            <div class="chicken-wrapper">
+                <!-- Status bars (dynamisch) -->
+                <div class="chicken-status-bars" id="chicken-bars-container">
+                    <!-- Wordt gevuld door JavaScript -->
+                </div>
+
+                <!-- Pet display area -->
+                <div class="chicken-pet-area">
+                    <div class="chicken-pet-container" id="chicken-pet-container">
+                        <span class="chicken-pet-emoji">&#x1F95A;</span>
+                    </div>
+                    <div class="chicken-mood" id="chicken-mood" aria-live="polite">Houd me lekker warm!</div>
+                </div>
+
+                <!-- Actieknoppen (dynamisch) -->
+                <div class="chicken-actions" id="chicken-actions-container">
+                    <!-- Wordt gevuld door JavaScript -->
                 </div>
             </div>
         </div>
@@ -1083,6 +1184,42 @@
         </div>
     </div>
 
+    <!-- Kippenspel actie popup -->
+    <div id="chicken-shop-popup" class="popup hidden" role="dialog" aria-modal="true" aria-labelledby="chicken-shop-title">
+        <div class="popup-content chicken-shop-popup">
+            <h2 id="chicken-shop-title" class="chicken-shop-header">
+                <span class="shop-action-icon" id="chicken-shop-action-icon">&#x1F525;</span>
+                <span id="chicken-shop-action-text">Warmte</span>
+            </h2>
+
+            <!-- De rekensom -->
+            <div class="chicken-math-question">
+                <span class="math-problem" id="chicken-math-problem">1 &#x00D7; 2 = ?</span>
+            </div>
+
+            <!-- Invoer display -->
+            <div class="chicken-input-display" id="chicken-input-display" aria-live="polite" aria-atomic="true">_</div>
+
+            <!-- Nummerpad -->
+            <div class="number-pad chicken-numpad" id="chicken-number-pad" role="group" aria-label="Cijfertoetsen">
+                <button class="num-btn" onclick="chickenInputNumber(1)" aria-label="1">1</button>
+                <button class="num-btn" onclick="chickenInputNumber(2)" aria-label="2">2</button>
+                <button class="num-btn" onclick="chickenInputNumber(3)" aria-label="3">3</button>
+                <button class="num-btn" onclick="chickenInputNumber(4)" aria-label="4">4</button>
+                <button class="num-btn" onclick="chickenInputNumber(5)" aria-label="5">5</button>
+                <button class="num-btn" onclick="chickenInputNumber(6)" aria-label="6">6</button>
+                <button class="num-btn" onclick="chickenInputNumber(7)" aria-label="7">7</button>
+                <button class="num-btn" onclick="chickenInputNumber(8)" aria-label="8">8</button>
+                <button class="num-btn" onclick="chickenInputNumber(9)" aria-label="9">9</button>
+                <button class="num-btn clear-btn" onclick="chickenClearInput()" aria-label="Wis laatste cijfer">&#x2190;</button>
+                <button class="num-btn" onclick="chickenInputNumber(0)" aria-label="0">0</button>
+                <button class="num-btn confirm-btn" onclick="chickenConfirmAnswer()" aria-label="Bevestig antwoord">OK</button>
+            </div>
+
+            <button class="close-popup-btn" onclick="closeChickenShop()" aria-label="Sluiten">Sluiten</button>
+        </div>
+    </div>
+
     <!-- Live region voor aankondigingen -->
     <div id="announcer" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
 
@@ -1102,6 +1239,7 @@
     <script src="change.js"></script>
     <script src="clock.js"></script>
     <script src="tamagotchi.js"></script>
+    <script src="chicken.js"></script>
     <script src="keyboard.js"></script>
 </body>
 </html>
